@@ -2,6 +2,12 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "neo4j": "libs/neo4j"
+    "api": "apps/api",
+    "auth": "libs/auth",
+    "home": "libs/home",
+    "neo4j": "libs/neo4j",
+    "platform": "apps/platform",
+    "shared-auth": "libs/shared/auth",
+    "web-tokens": "libs/web-tokens"
   }
 }

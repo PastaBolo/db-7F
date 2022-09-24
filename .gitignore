@@ -40,3 +40,7 @@ Thumbs.db
 
 # Volumes for local db with Docker and Neo4j
 db
+.angular
+
+# Private key for Firebase Admin
+apps/api/src/firebase-admin.config.ts

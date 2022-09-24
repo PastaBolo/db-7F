@@ -15,7 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@seven-fallen/neo4j": ["libs/neo4j/src/index.ts"]
+      "@seven-fallen/auth": ["libs/auth/src/index.ts"],
+      "@seven-fallen/home": ["libs/home/src/index.ts"],
+      "@seven-fallen/neo4j": ["libs/neo4j/src/index.ts"],
+      "@seven-fallen/shared/auth": ["libs/shared/auth/src/index.ts"],
+      "@seven-fallen/web-tokens": ["libs/web-tokens/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
