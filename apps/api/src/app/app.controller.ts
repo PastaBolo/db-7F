@@ -11,4 +11,10 @@ export class AppController {
   getData() {
     return this.appService.getData();
   }
+
+  @UseGuards(AuthGuard('firebase'))
+  @Get('hello')
+  getHello(@Req() request: any, @Headers() headers: any): { message: string } {
+    return { message: 'coucou' };
+  }
 }

@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  gap: 3rem;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview {
+  max-height: 600px;
+  max-width: 600px;
+  
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+}

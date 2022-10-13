@@ -1,0 +1,54 @@
+<div style="display:flex; flex-direction: column; gap: 1rem;">
+  <div>
+    <input type="file" (change)="images$.next($any($event.target).files)" multiple>
+  </div>
+  <div>
+    <label>
+      <span>Extension</span>
+      <select (change)="edition$.next($any($event.target).value)">
+        <option></option>
+        <option value="LGDR">LGDR</option>
+        <option value="LCDS">LCDS</option>
+        <option value="TDLL">TDLL</option>
+        <option value="PUCE">PUCE</option>
+        <option value="LVSA">LVSA</option>
+        <option value="ANAYA">ANAYA</option>
+        <option value="LEDI">LEDI</option>
+        <option value="DDLG">DDLG</option>
+        <option value="TRDD">TRDD</option>
+        <option value="VS">VS</option>
+      </select>
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>Eden</span>
+      <input type="checkbox" (change)="isEden$.next($any($event.target).checked)">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>Number</span>
+      <input type="number" [value]="number$ | async" (change)="number$.next($any($event.target).valueAsNumber)">
+    </label>
+  </div>
+  <label>
+    <span>Search</span>
+    <input #searchInput type="text" (input)="search$.next($any($event.target).value)">
+  </label>
+  <div class="search-results">
+    <label *ngFor="let card of cards$ | async" style="display: flex">
+      <input type="radio" name="card" [value]="card.id" (click)="this.selectId$.next(card.id)">
+      <span>{{ card.type }} - {{ card.name }}</span>
+    </label>
+  </div>
+  <div>
+    <button (click)="upload()">Upload</button>
+  </div>
+</div>
+
+<div class="preview">
+  <button (click)="index$.next(index$.value + 1)">next</button>
+  <button (click)="index$.next(index$.value - 1)">previous</button>
+  <img [src]="previewSrc$ | async" alt="">
+</div>

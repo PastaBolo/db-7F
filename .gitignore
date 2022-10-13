@@ -42,5 +42,7 @@ Thumbs.db
 db
 .angular
 
-# Private key for Firebase Admin
-apps/api/src/firebase-admin.config.ts
+# Private configurations
+**/firebase-admin.config.ts
+**/bucket-access.config.ts
+**/bucket-name.ts
