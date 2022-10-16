@@ -14,6 +14,7 @@
     "shared-auth": "libs/shared/auth",
     "shared-services": "libs/shared/services",
     "ui": "libs/ui",
+    "users": "libs/users",
     "web-tokens": "libs/web-tokens"
   }
 }

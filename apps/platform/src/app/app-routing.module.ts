@@ -23,6 +23,11 @@ const routes: Routes = [
           import('@seven-fallen/deckbuilder').then((m) => m.DeckbuilderModule),
       },
       {
+        path: 'users',
+        loadChildren: () =>
+          import('@seven-fallen/users').then((m) => m.UsersModule),
+      },
+      {
         path: 'profile',
         loadChildren: () =>
           import('@seven-fallen/profile').then((m) => m.ProfileModule),

@@ -23,6 +23,7 @@
       "@seven-fallen/shared/auth": ["libs/shared/auth/src/index.ts"],
       "@seven-fallen/shared/services": ["libs/shared/services/src/index.ts"],
       "@seven-fallen/ui": ["libs/ui/src/index.ts"],
+      "@seven-fallen/users": ["libs/users/src/index.ts"],
       "@seven-fallen/web-tokens": ["libs/web-tokens/src/index.ts"]
     }
   },

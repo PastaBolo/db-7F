@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+.user {
+  cursor: pointer;
+
+  &:hover {
+    @include mat.elevation(4);
+  }
+}

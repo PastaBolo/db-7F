@@ -10,7 +10,7 @@ interface User {
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UsersService {
   private readonly updateUser$ = new Subject<{ name: string }>();
 
   public readonly currentUser$ = merge(
@@ -20,7 +20,13 @@ export class UserService {
     )
   ).pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
+  public readonly users$ = this.http.get<any[]>('users');
+
   constructor(private readonly http: HttpClient) {}
+
+  public get(uid: string) {
+    return this.http.get<any>(`users/${uid}`);
+  }
 
   public update(user: { name: string }) {
     this.updateUser$.next(user);

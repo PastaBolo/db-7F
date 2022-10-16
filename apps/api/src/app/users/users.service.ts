@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Neo4jService } from '@seven-fallen/neo4j';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(private readonly neo4jService: Neo4jService) {}
 
   public async get(uid: string) {
     return await this.neo4jService.read(
       `
-        MATCH (u:User {uid: $uid})
-        RETURN properties(u)
+        MATCH (u:User {uid: $uid})-[:HAS_BUILT]->(d:Deck)--(de:Card:Divinite)--(kingdom:Kingdom)
+        OPTIONAL MATCH (de)--(i:CardInstance)
+        WITH d{.*, deity: {id: de.id, name: de.name, kingdom: properties(kingdom), images: collect(i.imgSrc)}} as deck, u
+        RETURN u{.*, decks: collect(properties(apoc.map.removeKey(deck, 'cards')))}
       `,
       { uid }
     );
@@ -23,6 +25,15 @@ export class UserService {
         RETURN properties(u)
       `,
       { uid, user }
+    );
+  }
+
+  public async search() {
+    return await this.neo4jService.read(
+      `
+        MATCH (u:User)
+        RETURN properties(u)
+      `
     );
   }
 }

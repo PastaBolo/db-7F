@@ -1,0 +1,6 @@
+<a *ngFor="let user of users$ | async" [routerLink]="user.uid">
+  <mat-card class="user">
+    <mat-card-title>{{ user.name }}</mat-card-title>
+    <mat-card-content>Decks partagés : 0</mat-card-content>
+  </mat-card>
+</a>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { UserService } from '@seven-fallen/shared/services';
+import { UsersService } from '@seven-fallen/shared/services';
 import { map } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { map } from 'rxjs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-  public readonly form$ = this.userService.currentUser$.pipe(
+  public readonly form$ = this.usersService.currentUser$.pipe(
     map(
       (user) =>
         new FormGroup({
@@ -22,9 +22,9 @@ export class MainComponent {
     )
   );
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   public update(user: Partial<{ name: string }>) {
-    this.userService.update(user as { name: string });
+    this.usersService.update(user as { name: string });
   }
 }

@@ -5,6 +5,7 @@ body {
   margin: 0;
 }
 
+// reset
 * {
   box-sizing: border-box;
 }
@@ -15,6 +16,12 @@ img {
   max-width: 100%;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+// custom scrollbar
 * {
   &::-webkit-scrollbar {
     width: 8px;
@@ -32,6 +39,7 @@ img {
   }
 }
 
+// text styles
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -70,6 +78,7 @@ img {
   font-weight: 700;
 }
 
+// layout
 .center {
   display: flex;
   align-items: center;

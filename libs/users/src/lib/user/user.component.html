@@ -1,0 +1,12 @@
+<ng-container *ngIf="user$ | async as user">
+  <div>{{ user.name }}</div>
+  <div>
+    <a *ngFor="let deck of user.decks" [routerLink]="['../..', 'decks', deck.id]">
+      <mat-card class="user">
+        <mat-card-title>{{ deck.name }}</mat-card-title>
+        <mat-card-content>Divinité : {{ deck.deity.name }}</mat-card-content>
+        <mat-card-content>Royaume : {{ deck.deity.kingdom.name }}</mat-card-content>
+      </mat-card>
+    </a>
+  </div>
+</ng-container>
