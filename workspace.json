@@ -6,10 +6,12 @@
     "admin-api": "apps/admin-api",
     "api": "apps/api",
     "auth": "libs/auth",
+    "deckbuilder": "libs/deckbuilder",
     "home": "libs/home",
     "neo4j": "libs/neo4j",
     "platform": "apps/platform",
     "shared-auth": "libs/shared/auth",
+    "ui": "libs/ui",
     "web-tokens": "libs/web-tokens"
   }
 }

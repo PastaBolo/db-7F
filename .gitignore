@@ -46,3 +46,6 @@ db
 **/firebase-admin.config.ts
 **/bucket-access.config.ts
 **/bucket-name.ts
+
+# Env files
+.env

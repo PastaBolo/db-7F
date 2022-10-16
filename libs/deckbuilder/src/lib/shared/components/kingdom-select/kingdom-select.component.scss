@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.kingdom-logo {
+  width: 3rem;
+  opacity: 0.15;
+  cursor: pointer;
+  transition: opacity 150ms ease-in-out;
+
+  &.selected {
+    opacity: 1;
+  }
+}

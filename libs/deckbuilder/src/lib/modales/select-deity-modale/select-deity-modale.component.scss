@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+
+.deities-container {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  gap: 1.5rem;
+
+  .deity {
+    @include mat.elevation(4);
+    
+    &:hover {
+      @include mat.elevation(8);
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+
+  .type {
+    opacity: 0.3;
+    cursor: pointer;
+    transition: opacity 150ms ease-in-out;
+
+    &.selected {
+      opacity: 1;
+    }
+  }
+}

@@ -9,9 +9,20 @@ import {
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('@seven-fallen/home').then((m) => m.HomeModule),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['auth']) },
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@seven-fallen/home').then((m) => m.HomeModule),
+      },
+      {
+        path: 'decks',
+        loadChildren: () =>
+          import('@seven-fallen/deckbuilder').then((m) => m.DeckbuilderModule),
+      },
+    ],
   },
   {
     path: 'auth',

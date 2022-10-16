@@ -1,0 +1,120 @@
+<ng-container *ngIf="deck$ | async as deck">
+  <div>
+    <button mat-raised-button (click)="submit()">
+      <span class="material-symbols-outlined">save</span>
+    </button>
+    <div class="text-2xl">{{ deck.name }}</div>
+    <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
+    <seven-fallen-charts [cards]="(deckCards$ | async)!"></seven-fallen-charts>
+  </div>
+
+  <div class="deck-container">
+    <ng-container *ngFor="let type of types">
+      <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckCards$ | async, type: type }"></ng-container>
+    </ng-container>
+  </div>
+
+  <div *let="deckCards$ | async as deckCards">
+    <form [formGroup]="(filters$ | async)!">
+      <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
+      <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
+    </form>
+    <div *ngFor="let card of cardsSearch$ | async" class="card">
+      <div class="quantity">
+        <div class="button" (click)="remove(card)">-</div>
+        <div>{{ card | map: getQuantity: deckCards }}</div>
+        <div class="button" (click)="add(card)">+</div>
+      </div>
+      <div>{{ card.name }}</div>
+      <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: card }"></ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #typeTmpl let-cards let-type="type">
+  <ng-container *let="cards | map: byType: type.type as cards">
+    <div *ngIf="cards.length" cdkAccordionItem #cardListAccordion="cdkAccordionItem" expanded class="cards-by-type-container" [class.expanded]="cardListAccordion.expanded">
+      <div (click)="cardListAccordion.toggle()" class="cards-by-type-header">
+        <div class="text-l text-semibold">{{ type.label }}</div>
+        <span class="material-symbols-outlined expand-button">expand_more</span>
+        <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: type.type }"></ng-container>
+      </div>
+      <ng-container *ngIf="cards.length">
+        <div *ngIf="cardListAccordion.expanded" @expand>
+          <div *ngFor="let group of cards | map: groupCards" class="card">
+            <div class="quantity">
+              <div class="button" (click)="remove(group.card)">-</div>
+              <div>{{ group.qty }}</div>
+              <div class="button" (click)="add(group.card)">+</div>
+            </div>
+            <div>{{ group.card.name }}</div>
+            <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: group.card }"></ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #statsIcons let-type>
+  <div class="stats-icons">
+    <ng-container [ngSwitch]="type">
+      <ng-container *ngSwitchCase="'Archange'">
+        <span class="material-symbols-outlined center">swords</span>
+        <span class="fa-regular fa-heart center"></span>
+        <span class="material-symbols-outlined center">database</span>
+        <span class="fa-solid fa-layer-group"></span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Temple'">
+        <span class="material-symbols-outlined center">database</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Adorateur'">
+        <span class="material-symbols-outlined center">database</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Ange'">
+        <span class="material-symbols-outlined center">swords</span>
+        <span class="fa-regular fa-heart center"></span>
+        <span class="material-symbols-outlined center">database</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Golem'">
+        <span class="fa-solid fa-shield center"></span>
+        <span class="material-symbols-outlined center">database</span>
+        <span class="fa-solid fa-bolt-lightning center"></span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Equipement'">
+        <span class="material-symbols-outlined center">swords</span>
+        <span class="fa-solid fa-bolt-lightning center"></span>
+        <span class="fa-solid fa-place-of-worship center"></span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Benediction'">
+        <i class="fa-solid fa-hourglass center"></i>
+        <span class="material-symbols-outlined center">database</span>
+        <span class="fa-solid fa-place-of-worship center"></span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Miracle'">
+        <span class="fa-solid fa-place-of-worship center"></span>
+        <span class="revoquer center">
+          <span class="fa-solid fa-place-of-worship"></span>
+        </span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Familier'">
+        <span class="material-symbols-outlined center">swords</span>
+        <span class="fa-regular fa-heart center"></span>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #statsTmpl let-card>
+  <div class="stats">
+    <div *ngIf="card.atq !== undefined" class="center">{{ card.atq }}</div>
+    <div *ngIf="card.fv !== undefined" class="center">{{ card.fv }}</div>
+    <div *ngIf="card.sablier !== undefined" class="center">{{ card.sablier }}</div>
+    <div *ngIf="card.bouclier !== undefined" class="center">{{ card.bouclier }}</div>
+    <div *ngIf="card.ec !== undefined" class="center">{{ card.ec }}</div>
+    <div *ngIf="card.ft !== undefined" class="center">{{ card.ft }}</div>
+    <div *ngIf="card.tempete !== undefined" class="center">{{ card.tempete }}</div>
+    <div *ngIf="card.adorateur !== undefined" class="center">{{ card.adorateur }}</div>
+    <div *ngIf="card.revoquer !== undefined" class="center">{{ card.revoquer }}</div>
+  </div>
+</ng-template>

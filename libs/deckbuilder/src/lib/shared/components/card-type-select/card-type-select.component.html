@@ -1,0 +1,3 @@
+<div *ngFor="let type of cardTypes | keyvalue" (click)="onClick(type.key)" class="type" [class.selected]="value === type.key">
+  {{ typeLabels.get(type.key) }}
+</div>

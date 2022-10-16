@@ -13,8 +13,19 @@
         "polyfills": "apps/platform/src/polyfills.ts",
         "tsConfig": "apps/platform/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/platform/src/favicon.ico", "apps/platform/src/assets"],
-        "styles": ["apps/platform/src/styles.scss"],
+        "assets": [
+          "apps/platform/src/favicon.ico",
+          "apps/platform/src/assets",
+          {
+            "input": "libs/deckbuilder/src/assets",
+            "glob": "**/*",
+            "output": "assets/deckbuilder"
+          }
+        ],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+          "apps/platform/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {

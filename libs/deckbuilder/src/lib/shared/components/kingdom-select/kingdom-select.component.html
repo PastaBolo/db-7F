@@ -1,0 +1,3 @@
+<div *ngFor="let kingdom of kingdoms" (click)="onClick(kingdom.id)" class="kingdom-logo" [class.selected]="value === kingdom.id">
+  <img [src]="'/assets/deckbuilder/kingdoms/' + kingdom.imgPath" alt="">
+</div>

@@ -1,0 +1,13 @@
+<div cdkAccordionItem #cardListAccordion="cdkAccordionItem">
+  <div (click)="cardListAccordion.toggle()" class="livre-sacre-title" [class.expanded]="cardListAccordion.expanded">
+    <span>Livre sacré : {{ cards | map: totalLivreSacre }}</span>
+    <span class="material-symbols-outlined expand-button">expand_more</span>
+  </div>
+  <div *ngIf="cardListAccordion.expanded" class="livre-sacre-details" @expand>
+    <div *ngFor="let type of typesLivreSacre">
+      {{ type.label }} : {{ (cards | map: byType: type.id).length }}
+    </div>
+  </div>
+</div>
+<canvas barChart [data]="cards | map: averageCosts"></canvas>
+<canvas barChart [data]="cards | map: detailedCosts"></canvas>

@@ -13,13 +13,16 @@ export const createConfig = (
     port: configService.get('DATABASE_PORT'),
     scheme: configService.get('DATABASE_SCHEME'),
     username: configService.get('DATABASE_USERNAME'),
+    disableLosslessIntegers: configService.get('DISABLE_LOSS_LESS_INTEGERS'),
   };
 
 export const createDriver = async (config: Neo4jConfig) => {
-  const { host, scheme, port, username, password } = config;
+  const { host, scheme, port, username, password, disableLosslessIntegers } =
+    config;
   const driver = neo4j.driver(
-    `${scheme}://${host}:${port}`,
-    neo4j.auth.basic(username, password)
+    port ? `${scheme}://${host}:${port}` : `${scheme}://${host}`,
+    neo4j.auth.basic(username, password),
+    { disableLosslessIntegers: !!disableLosslessIntegers }
   );
   await driver.verifyConnectivity();
   return driver;

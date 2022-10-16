@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.livre-sacre-title {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 2rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+
+  .expand-button {
+    transition: all 150ms ease-in-out;
+  }
+
+  &.expanded {
+    .expand-button {
+      transform: rotate(-180deg);
+    }
+  }
+}
+
+.livre-sacre-details {
+  overflow: hidden;
+  padding-left: 0.5rem;
+  line-height: 1.2rem;
+  font-size: 0.9rem;
+}

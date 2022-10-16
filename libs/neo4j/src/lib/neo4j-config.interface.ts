@@ -9,8 +9,9 @@ export type Neo4Scheme =
 export interface Neo4jConfig {
   scheme: Neo4Scheme;
   host: string;
-  port: string | number;
+  port?: string | number;
   username: string;
   password: string;
   database?: string;
+  disableLosslessIntegers?: string;
 }

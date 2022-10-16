@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+  <div class="deities-container">
+    <mat-card *ngFor="let deity of deities$ | async" class="deity" (click)="selectDeity(deity)">
+      {{ deity.name }}
+    </mat-card>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" type="button" (click)="close()">Annuler</button>
+</mat-dialog-actions>
