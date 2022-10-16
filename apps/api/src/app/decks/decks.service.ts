@@ -8,37 +8,38 @@ export class DecksService {
   public async get(id: string) {
     return await this.neo4jService.read(
       `
-        MATCH (deck:Deck {id: $id})--(de:Card:Divinite)--(kingdom:Kingdom)
-        MATCH (c:Card) WHERE c.id IN properties(deck).cards
+        MATCH (user:User)--(deck:Deck {id: $id})--(de:Card:Divinite)--(kingdom:Kingdom)
+        OPTIONAL MATCH (c:Card) WHERE c.id IN properties(deck).cards
         OPTIONAL MATCH (de)--(iDeity:CardInstance)
         OPTIONAL MATCH (c:Card)--(i:CardInstance) 
-        WITH (c{.*, images: collect(i.imgSrc)}) as card, deck, de{.*, images: collect(iDeity.imgSrc)} as deity, kingdom
-        RETURN { deck: deck{.*, deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card) }
+        WITH (c{.*, images: collect(i.imgSrc)}) as card, deck, de{.*, images: collect(iDeity.imgSrc)} as deity, kingdom, user
+        RETURN { deck: deck{.*, deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card), creator: properties(user) }
       `,
       { id }
     );
   }
 
-  public async create(deityId: string, name: string) {
+  public async create(uid: string, deityId: string, name: string) {
     return await this.neo4jService.write(
       `
+        MATCH (u:User {uid: $uid})
         MATCH (c:Card:Divinite {id: $deityId})-->(k:Kingdom)
-        CREATE (d:Deck {id: apoc.create.uuid(), name: $name, cards: []})-[:HAS_DEITY]->(c)
+        CREATE (u)-[:HAS_BUILT]->(d:Deck {id: apoc.create.uuid(), name: $name, cards: []})-[:HAS_DEITY]->(c)
         WITH apoc.map.removeKey(c, 'search') AS deity, d AS deck, k AS kingdom
         RETURN deck{.*, deity: deity{.*, kingdom: properties(kingdom)}}
       `,
-      { deityId, name }
+      { uid, deityId, name }
     );
   }
 
-  public async save(id: string, cards: any[]) {
+  public async update(uid: string, id: string, cards: any[]) {
     await this.neo4jService.write(
       `
-        MATCH(d:Deck {id: $id})
+        OPTIONAL MATCH (:User {uid: $uid})-[:HAS_BUILT]->(d:Deck {id: $id})
         SET d.cards = $cards
         RETURN d
       `,
-      { id, cards }
+      { uid, id, cards }
     );
     return {};
   }

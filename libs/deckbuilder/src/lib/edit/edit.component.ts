@@ -151,7 +151,7 @@ export class EditComponent {
       .pipe(
         take(1),
         switchMap(({ deck, cards }) =>
-          this.decksService.save(
+          this.decksService.update(
             deck.id,
             cards.map((card) => card.id)
           )

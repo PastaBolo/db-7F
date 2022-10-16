@@ -43,7 +43,7 @@ export class DecksService {
       );
   }
 
-  public save(id: string, cards: any): any {
+  public update(id: string, cards: any): any {
     return this.http.post(`decks/${id}`, cards);
   }
 }
