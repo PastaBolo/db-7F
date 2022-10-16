@@ -19,7 +19,9 @@
       "@seven-fallen/deckbuilder": ["libs/deckbuilder/src/index.ts"],
       "@seven-fallen/home": ["libs/home/src/index.ts"],
       "@seven-fallen/neo4j": ["libs/neo4j/src/index.ts"],
+      "@seven-fallen/profile": ["libs/profile/src/index.ts"],
       "@seven-fallen/shared/auth": ["libs/shared/auth/src/index.ts"],
+      "@seven-fallen/shared/services": ["libs/shared/services/src/index.ts"],
       "@seven-fallen/ui": ["libs/ui/src/index.ts"],
       "@seven-fallen/web-tokens": ["libs/web-tokens/src/index.ts"]
     }

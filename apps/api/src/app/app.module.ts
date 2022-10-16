@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { CardsModule } from './cards/cards.module';
 import { DecksModule } from './decks/decks.module';
 import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AppService } from './app.service';
     Neo4jModule.forRootAsync(),
     CardsModule,
     DecksModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

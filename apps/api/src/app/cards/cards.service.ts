@@ -35,6 +35,7 @@ export class CardsService {
       `
     );
   }
+
   private byKingdom(kingdomId: string) {
     return kingdomId ? `--(:Kingdom {id: '${kingdomId}'})` : '';
   }

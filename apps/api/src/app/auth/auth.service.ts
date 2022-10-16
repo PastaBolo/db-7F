@@ -20,7 +20,7 @@ export class AuthService {
     return await this.neo4jService.read(
       `
         MERGE (u:User {uid: $uid})
-        ON CREATE SET u.username = apoc.text.join(['user', $uid], '-')
+        ON CREATE SET u.name = apoc.text.join(['user', $uid], '-')
         RETURN properties(u)
       `,
       { uid }

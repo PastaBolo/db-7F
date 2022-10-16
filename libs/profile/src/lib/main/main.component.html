@@ -1,0 +1,11 @@
+<ng-container *ngIf="form$ | async as form">
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field>
+        <mat-label>Nom utilisateur</mat-label>
+        <input matInput formControlName="name" type="text">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit" [disabled]="(form.valueChanges | async) === null || form.invalid" (click)="update(form.value)">Mettre à jour</button>
+  </form>
+</ng-container>

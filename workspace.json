@@ -10,7 +10,9 @@
     "home": "libs/home",
     "neo4j": "libs/neo4j",
     "platform": "apps/platform",
+    "profile": "libs/profile",
     "shared-auth": "libs/shared/auth",
+    "shared-services": "libs/shared/services",
     "ui": "libs/ui",
     "web-tokens": "libs/web-tokens"
   }

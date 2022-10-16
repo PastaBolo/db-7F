@@ -22,6 +22,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('@seven-fallen/deckbuilder').then((m) => m.DeckbuilderModule),
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('@seven-fallen/profile').then((m) => m.ProfileModule),
+      },
     ],
   },
   {
