@@ -15,19 +15,24 @@
   </div>
 
   <div *let="deckCards$ | async as deckCards">
-    <form [formGroup]="(filters$ | async)!">
-      <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
-      <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
-    </form>
-    <div *ngFor="let card of cardsSearch$ | async" class="card">
-      <div class="quantity">
-        <div class="button" (click)="remove(card)">-</div>
-        <div>{{ card | map: getQuantity: deckCards }}</div>
-        <div class="button" (click)="add(card)">+</div>
+    <ng-container *ngIf="filters$ | async as filters">
+      <form [formGroup]="filters">
+        <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
+        <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
+      </form>
+      <div class="flex align-end" style="padding: 0.35rem">
+        <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: cardTypes.get(filters.get('type')!.value) }"></ng-container>
       </div>
-      <div>{{ card.name }}</div>
-      <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: card }"></ng-container>
-    </div>
+      <div *ngFor="let card of cardsSearch$ | async" class="card">
+        <div class="quantity">
+          <div class="button" (click)="remove(card)">-</div>
+          <div>{{ card | map: getQuantity: deckCards }}</div>
+          <div class="button" (click)="add(card)">+</div>
+        </div>
+        <div>{{ card.name }}</div>
+        <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: card }"></ng-container>
+      </div>
+    </ng-container>
   </div>
 </ng-container>
 

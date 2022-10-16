@@ -102,6 +102,19 @@ export class EditComponent {
     { type: 'Familier', label: 'Familiers' },
   ];
 
+  public readonly cardTypes = new Map([
+    [2, 'Archange'],
+    [3, 'Temple'],
+    [4, 'Adorateur'],
+    [5, 'Ange'],
+    [6, 'Golem'],
+    [7, 'Equipement'],
+    [8, 'Benediction'],
+    [9, 'Miracle'],
+    [10, 'CadeauDivin'],
+    [11, 'Familier'],
+  ]);
+
   public readonly byType = (cards: any[], type: string) =>
     cards.filter((card) => card.type === type);
 
