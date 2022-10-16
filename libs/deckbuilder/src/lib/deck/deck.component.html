@@ -1,6 +1,9 @@
 <ng-container *ngIf="data$ | async as data">
   <div>
     <div class="text-2xl">{{ data.deck.name }}</div>
+    <a [routerLink]="['../edit', data.deck.id]">
+      <button *isCurrentUserId="data.creator.uid" mat-raised-button>Editer</button>
+    </a>
     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
     <seven-fallen-charts [cards]="cards$ | async"></seven-fallen-charts>
   </div>

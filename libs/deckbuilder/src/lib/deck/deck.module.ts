@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
-import { LetModule, MapperModule } from '@seven-fallen/ui';
+import { PermissionsModule, MapperModule, LetModule } from '@seven-fallen/ui';
 import { DeckComponent } from './deck.component';
 import { ChartsModule } from '../shared';
 
@@ -15,9 +15,11 @@ import { ChartsModule } from '../shared';
     RouterModule,
     MatButtonModule,
     CdkAccordionModule,
-    LetModule,
+    PermissionsModule,
     MapperModule,
     ChartsModule,
+    PermissionsModule,
+    LetModule,
   ],
 })
 export class DeckModule {}
