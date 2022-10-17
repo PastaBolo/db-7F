@@ -50,3 +50,10 @@ main {
   height: 100%;
   width: 100%;
 }
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}

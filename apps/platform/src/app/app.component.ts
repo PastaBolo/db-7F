@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, TemplateRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DecksService } from '@seven-fallen/deckbuilder';
 import { AuthService } from '@seven-fallen/shared/auth';
@@ -11,7 +11,7 @@ import { AuthService } from '@seven-fallen/shared/auth';
 })
 export class AppComponent {
   constructor(
-    private readonly router: Router,
+    private readonly dialog: MatDialog,
     private readonly authService: AuthService,
     private readonly decksService: DecksService
   ) {}
@@ -21,6 +21,10 @@ export class AppComponent {
   }
 
   public signOut(): void {
-    this.authService.signOut().subscribe(() => this.router.navigate(['auth']));
+    this.authService.signOut();
+  }
+
+  public openSettings(settingsTmpl: TemplateRef<void>) {
+    this.dialog.open(settingsTmpl);
   }
 }

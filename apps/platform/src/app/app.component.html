@@ -1,18 +1,19 @@
 <nav>
-  <span class="material-icons" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
+  <a *isNotLoggedIn class="material-icons" routerLink="auth">login</a>
+  <span *isLoggedIn class="material-icons" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
   <span class="material-icons" (click)="drawer.close()">menu_book</span>
   <span class="material-icons" (click)="drawer.close()">search</span>
   <span class="material-icons" (click)="drawer.close()">summarize</span>
-  <span class="material-icons" (click)="drawer.close()">group</span>
-  <span class="material-icons" (click)="drawer.close()">person_search</span>
-  <span class="material-icons" (click)="signOut()" style="margin-top: auto">settings</span>
+  <span *isLoggedIn class="material-icons" (click)="drawer.close()">group</span>
+  <span *isLoggedIn class="material-icons" (click)="drawer.close()">person_search</span>
+  <span *isLoggedIn class="material-icons" (click)="openSettings(settingsTmpl)" style="margin-top: auto">settings</span>
 </nav>
 <mat-drawer-container autosize hasBackdrop>
   <mat-drawer #drawer mode="over">
-    <div class="mat-drawer-content">
+    <div *isLoggedIn class="mat-drawer-content">
       <div (click)="drawer.close(); createNewDeck()">Créer un deck</div>
       <div><a [routerLink]="" (click)="drawer.close()">Voir mes decks</a></div>
-      <div><a [routerLink]="" (click)="drawer.close()">Chercher un deck</a></div>
+      <div><a [routerLink]="" (click)="drawer.close()">Rechercher un deck</a></div>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -21,3 +22,15 @@
     </main>
   </mat-drawer-content>
 </mat-drawer-container>
+
+<ng-template #settingsTmpl let-dialogRef="dialogRef">
+  <mat-dialog-content>
+    <div class="flex justify-end">
+      <span class="material-icons" (click)="dialogRef.close()">close</span>
+    </div>
+    <div class="settings-options">
+      <a mat-raised-button routerLink="profile" (click)="dialogRef.close()">Profil</a>
+      <button mat-raised-button (click)="dialogRef.close(); signOut()">Déconnexion</button>
+    </div>
+  </mat-dialog-content>
+</ng-template>
