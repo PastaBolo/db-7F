@@ -6,7 +6,9 @@ import { switchMap, of, EMPTY } from 'rxjs';
 import { NewDeckConfigModaleComponent } from '../modales/new-deck-config-modale/new-deck-config-modale.component';
 import { SelectDeityModaleComponent } from '../modales/select-deity-modale/select-deity-modale.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DecksService {
   constructor(
     private readonly http: HttpClient,

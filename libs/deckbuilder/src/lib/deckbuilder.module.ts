@@ -6,7 +6,6 @@ import { EditModule } from './edit/edit.module';
 import { DeckModule } from './deck/deck.module';
 import { NewDeckConfigModaleModule } from './modales/new-deck-config-modale/new-deck-config-modale.module';
 import { SelectDeityModaleModule } from './modales/select-deity-modale/select-deity-modale.module';
-import { DecksService } from './services/decks.service';
 
 @NgModule({
   imports: [
@@ -17,6 +16,6 @@ import { DecksService } from './services/decks.service';
     NewDeckConfigModaleModule,
     SelectDeityModaleModule,
   ],
-  providers: [DecksService],
+  providers: [],
 })
 export class DeckbuilderModule {}

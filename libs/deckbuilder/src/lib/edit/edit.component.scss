@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: 0.75fr 1fr 1fr;
   gap: 2rem;
+  height: 100%;
 
   > * {
     overflow: auto;

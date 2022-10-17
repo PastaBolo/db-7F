@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<nav>
+  <span class="material-icons" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
+  <span class="material-icons" (click)="drawer.close()">menu_book</span>
+  <span class="material-icons" (click)="drawer.close()">search</span>
+  <span class="material-icons" (click)="drawer.close()">summarize</span>
+  <span class="material-icons" (click)="drawer.close()">group</span>
+  <span class="material-icons" (click)="drawer.close()">person_search</span>
+  <span class="material-icons" style="margin-top: auto">settings</span>
+</nav>
+<main>
+  <mat-drawer-container autosize hasBackdrop>
+    <mat-drawer #drawer mode="over">
+      <div class="mat-drawer-content">
+        <div (click)="createNewDeck()">Créer un deck</div>
+        <div><a [routerLink]="">Voir mes decks</a></div>
+        <div><a [routerLink]="">Voir tous les decks</a></div>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content>
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</main>
