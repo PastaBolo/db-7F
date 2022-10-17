@@ -9,7 +9,9 @@
   </div>
   <div class="container">
     <div>
-      <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
+      <div class="deity-container">
+        <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
+      </div>
       <seven-fallen-charts [cards]="cards$ | async"></seven-fallen-charts>
     </div>
 

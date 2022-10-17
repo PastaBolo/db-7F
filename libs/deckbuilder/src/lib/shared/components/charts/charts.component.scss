@@ -28,4 +28,10 @@
   padding-left: 0.5rem;
   line-height: 1.2rem;
   font-size: 0.9rem;
+
+  .type {
+    display: flex;
+    justify-content: space-between;
+    width: 7.5rem;
+  }
 }

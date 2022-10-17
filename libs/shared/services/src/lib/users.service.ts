@@ -34,7 +34,6 @@ export class UsersService {
   ) {}
 
   public get(uid: string) {
-    console.log(uid);
     return this.http.get<any>(`users/${uid}`);
   }
 

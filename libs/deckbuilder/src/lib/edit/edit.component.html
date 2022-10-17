@@ -1,65 +1,133 @@
 <ng-container *ngIf="deck$ | async as deck">
-  <div>
-    <button mat-raised-button (click)="submit()">
-      <span class="material-symbols-outlined">save</span>
-    </button>
-    <div class="text-2xl">{{ deck.name }}</div>
-    <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
-    <seven-fallen-charts [cards]="(deckCards$ | async)!"></seven-fallen-charts>
-  </div>
-
-  <div class="deck-container">
-    <ng-container *ngFor="let type of types">
-      <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckCards$ | async, type: type }"></ng-container>
-    </ng-container>
-  </div>
-
-  <div *let="deckCards$ | async as deckCards">
-    <ng-container *ngIf="filters$ | async as filters">
-      <form [formGroup]="filters">
-        <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
-        <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
-      </form>
-      <div class="flex align-end" style="padding: 0.35rem">
-        <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: cardTypes.get(filters.get('type')!.value) }"></ng-container>
-      </div>
-      <div *ngFor="let card of cardsSearch$ | async" class="card">
-        <div class="quantity">
-          <div class="button" (click)="remove(card)">-</div>
-          <div>{{ card | map: getQuantity: deckCards }}</div>
-          <div class="button" (click)="add(card)">+</div>
-        </div>
-        <div>{{ card.name }}</div>
-        <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: card }"></ng-container>
-      </div>
-    </ng-container>
-  </div>
-</ng-container>
-
-<ng-template #typeTmpl let-cards let-type="type">
-  <ng-container *let="cards | map: byType: type.type as cards">
-    <div *ngIf="cards.length" cdkAccordionItem #cardListAccordion="cdkAccordionItem" expanded class="cards-by-type-container" [class.expanded]="cardListAccordion.expanded">
-      <div (click)="cardListAccordion.toggle()" class="cards-by-type-header">
-        <div class="text-l text-semibold">{{ type.label }}</div>
-        <span class="material-symbols-outlined expand-button">expand_more</span>
-        <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: type.type }"></ng-container>
-      </div>
-      <ng-container *ngIf="cards.length">
-        <div *ngIf="cardListAccordion.expanded" @expand>
-          <div *ngFor="let group of cards | map: groupCards" class="card">
-            <div class="quantity">
-              <div class="button" (click)="remove(group.card)">-</div>
-              <div>{{ group.qty }}</div>
-              <div class="button" (click)="add(group.card)">+</div>
-            </div>
-            <div>{{ group.card.name }}</div>
-            <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: group.card }"></ng-container>
-          </div>
-        </div>
+  <div class="header">
+    <div class="text-2xl name">{{ deck.name }}</div>
+    <div class="options">
+      <button mat-icon-button (click)="editSettings()">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+      <button mat-icon-button (click)="submit()">
+        <span class="material-symbols-outlined">save</span>
+      </button>
+      <button mat-icon-button cdkAccordionItem #searchAccordion="cdkAccordionItem" expanded (click)="searchAccordion.toggle()" [class.selected]="searchAccordion.expanded" style="margin-left: auto;">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <ng-container cdkAccordion>
+        <button mat-icon-button cdkAccordionItem #gridLayoutAccordion="cdkAccordionItem" (click)="gridLayoutAccordion.open()" [class.selected]="gridLayoutAccordion.expanded">
+          <span class="material-symbols-outlined">apps</span>
+        </button>
+        <button mat-icon-button cdkAccordionItem #listLayoutAccordion="cdkAccordionItem" expanded (click)="listLayoutAccordion.open()" [class.selected]="listLayoutAccordion.expanded">
+          <span class="material-symbols-outlined">list</span>
+        </button>
       </ng-container>
     </div>
-  </ng-container>
-</ng-template>
+  </div>
+  <div class="container" [class.grid]="gridLayoutAccordion.expanded" [class.show-search]="searchAccordion.expanded">
+    <div>
+      <div class="deity-container">
+        <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
+        <button mat-icon-button (click)="editDeity()" class="edit">
+          <span class="material-symbols-outlined">edit</span>
+        </button>
+      </div>
+      <seven-fallen-charts [cards]="(deckCards$ | async)!"></seven-fallen-charts>
+    </div>
+
+    <div class="deck-container">
+      <ng-container *ngFor="let type of types">
+        <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckCards$ | async, type: type }"></ng-container>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="searchAccordion.expanded">
+      <div *let="deckCards$ | async as deckCards">
+        <ng-container *ngIf="filters$ | async as filters">
+          <form [formGroup]="filters" class="filters">
+            <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
+            <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
+          </form>
+          <ng-container *ngIf="cardsSearch$ | async as cardsSearch">
+            <ng-container *ngIf="cardsSearch.length">
+              <div class="flex align-end" style="padding: 0.35rem">
+                <ng-container *ngIf="listLayoutAccordion.expanded">
+                  <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: cardTypes.get(filters.get('type')!.value) }"></ng-container>
+                </ng-container>
+              </div>
+              <div *ngIf="gridLayoutAccordion.expanded" class="cards-grid">
+                <div *ngFor="let card of cardsSearch">
+                  <div class="card">
+                    <div class="image-container">
+                      <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
+                    </div>
+                    <div class="quantity">
+                      <div class="button" (click)="remove(card)">-</div>
+                      <div>{{ card | map: getQuantity: deckCards }}</div>
+                      <div class="button" (click)="add(card)">+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
+                <div *ngFor="let card of cardsSearch" class="card">
+                  <div class="quantity">
+                    <div class="button" (click)="remove(card)">-</div>
+                    <div>{{ card | map: getQuantity: deckCards }}</div>
+                    <div class="button" (click)="add(card)">+</div>
+                  </div>
+                  <div>{{ card.name }}</div>
+                  <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: card }"></ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!cardsSearch.length">
+              <div class="no-card-result">Aucune carte ne correspond à cette recherche</div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #typeTmpl let-cards let-type="type">
+    <ng-container *let="cards | map: byType: type.type as cards">
+      <div *ngIf="cards.length" cdkAccordionItem #cardListAccordion="cdkAccordionItem" expanded class="cards-by-type-container" [class.grid]="gridLayoutAccordion.expanded" [class.expanded]="cardListAccordion.expanded">
+        <div (click)="cardListAccordion.toggle()" class="cards-by-type-header">
+          <div class="text-l text-semibold">{{ type.label }}</div>
+          <span class="material-symbols-outlined expand-button">expand_more</span>
+          <ng-container *ngTemplateOutlet="statsIcons; context: { $implicit: type.type }"></ng-container>
+        </div>
+        <ng-container *ngIf="cards.length">
+          <div *ngIf="cardListAccordion.expanded" @expand>
+            <div *ngIf="gridLayoutAccordion.expanded" class="cards-grid">
+              <div *ngFor="let group of cards | map: groupCards">
+                <div class="card">
+                  <div class="image-container">
+                    <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + group.card.images[0]" alt="">
+                  </div>
+                  <div class="quantity">
+                    <div class="button" (click)="remove(group.card)">-</div>
+                    <div>{{ group.qty }}</div>
+                    <div class="button" (click)="add(group.card)">+</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
+              <div *ngFor="let group of cards | map: groupCards" class="card">
+                <div class="quantity">
+                  <div class="button" (click)="remove(group.card)">-</div>
+                  <div>{{ group.qty }}</div>
+                  <div class="button" (click)="add(group.card)">+</div>
+                </div>
+                <div>{{ group.card.name }}</div>
+                <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: group.card }"></ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-template>
+</ng-container>
 
 <ng-template #statsIcons let-type>
   <div class="stats-icons">

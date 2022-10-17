@@ -43,4 +43,24 @@ export class DecksController {
   ) {
     return this.decksService.update(uid, id, cards);
   }
+
+  @Post(':id/settings')
+  @UseGuards(AuthGuard('firebase'))
+  public updateSettings(
+    @UserId() uid: string,
+    @Param('id') id: string,
+    @Body() settings: { name: string }
+  ) {
+    return this.decksService.updateSettings(uid, id, settings);
+  }
+
+  @Post(':id/deity')
+  @UseGuards(AuthGuard('firebase'))
+  public updateDeity(
+    @UserId() uid: string,
+    @Param('id') id: string,
+    @Body() { deityId }: { deityId: string }
+  ) {
+    return this.decksService.updateDeity(uid, id, deityId);
+  }
 }

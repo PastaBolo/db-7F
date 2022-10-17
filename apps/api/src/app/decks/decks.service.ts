@@ -14,7 +14,7 @@ export class DecksService {
         OPTIONAL MATCH (c:Card)--(i:CardInstance) 
         WITH (c{.*, images: collect(i.imgSrc)}) as card, deck, de{.*, images: collect(iDeity.imgSrc)} as deity, kingdom, user
         RETURN { deck: deck{.*, deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card), creator: properties(user) }
-      `,
+        `,
       { id }
     );
   }
@@ -40,6 +40,37 @@ export class DecksService {
         RETURN d
       `,
       { uid, id, cards }
+    );
+    return {};
+  }
+
+  public async updateSettings(
+    uid: string,
+    id: string,
+    settings: { name: string }
+  ) {
+    await this.neo4jService.write(
+      `
+        OPTIONAL MATCH (:User {uid: $uid})-[:HAS_BUILT]->(d:Deck {id: $id})
+        SET d.name = $settings.name
+        RETURN d
+      `,
+      { uid, id, settings }
+    );
+    return {};
+  }
+
+  public async updateDeity(uid: string, id: string, deityId: string) {
+    await this.neo4jService.write(
+      `
+        MATCH (:User {uid: $uid})-[:HAS_BUILT]->(d:Deck {id: $id})-[r:HAS_DEITY]->()
+        DELETE r
+        WITH d
+        MATCH (c:Card:Divinite {id: $deityId})
+        MERGE (d)-[:HAS_DEITY]->(c)
+        RETURN d
+      `,
+      { uid, id, deityId }
     );
     return {};
   }

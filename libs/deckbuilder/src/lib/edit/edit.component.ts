@@ -8,8 +8,11 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   combineLatest,
+  filter,
   map,
   merge,
   scan,
@@ -19,8 +22,12 @@ import {
   switchMap,
   take,
 } from 'rxjs';
-import { CardsService } from '../services/cards.service';
-import { DecksService } from '../services/decks.service';
+
+import { CardsService, DecksService } from '../services';
+import {
+  DeckSettingsModaleComponent,
+  SelectDeityModaleComponent,
+} from '../modales';
 
 @Component({
   selector: 'seven-fallen-edit',
@@ -35,7 +42,11 @@ import { DecksService } from '../services/decks.service';
   ],
 })
 export class EditComponent {
-  public readonly data$ = this.route.params.pipe(
+  public refresh$ = new Subject<void>();
+
+  public readonly data$ = this.refresh$.pipe(
+    startWith(null),
+    switchMap(() => this.route.params),
     switchMap((params) => this.decksService.get(params['id'])),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
@@ -45,8 +56,8 @@ export class EditComponent {
     shareReplay({ refCount: true, bufferSize: 1 })
   );
 
-  public add$ = new Subject<any>();
-  public remove$ = new Subject<any>();
+  public readonly add$ = new Subject<any>();
+  public readonly remove$ = new Subject<any>();
 
   public readonly deckCards$ = merge(
     this.data$.pipe(
@@ -134,6 +145,8 @@ export class EditComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog,
+    private readonly snackbar: MatSnackBar,
     private readonly decksService: DecksService,
     private readonly cardsService: CardsService
   ) {}
@@ -144,6 +157,57 @@ export class EditComponent {
 
   public add(card: any) {
     this.add$.next(card);
+  }
+
+  public editSettings() {
+    this.deck$
+      .pipe(
+        take(1),
+        switchMap((deck) =>
+          this.dialog
+            .open(DeckSettingsModaleComponent, {
+              data: { name: deck.name },
+            })
+            .afterClosed()
+            .pipe(
+              filter((formValue?: any) => !!formValue),
+              map((formValue) => ({ deck, formValue })),
+              switchMap(({ deck, formValue }: { deck: any; formValue: any }) =>
+                this.decksService.updateSettings(deck.id, formValue)
+              )
+            )
+        )
+      )
+      .subscribe(() => {
+        this.snackbar.open(
+          'Les détails du deck ont bien été mis à jour',
+          'Ok',
+          { duration: 5000 }
+        );
+        this.refresh$.next();
+      });
+  }
+
+  public editDeity() {
+    combineLatest({
+      deck: this.deck$,
+      deity: this.dialog
+        .open(SelectDeityModaleComponent)
+        .afterClosed()
+        .pipe(filter((formValue?: any) => !!formValue)),
+    })
+      .pipe(
+        take(1),
+        switchMap(({ deck, deity }: { deck: any; deity: any }) =>
+          this.decksService.updateDeity(deck.id, deity)
+        )
+      )
+      .subscribe(() => {
+        this.snackbar.open('La divinité a bien été modifiée', 'Ok', {
+          duration: 5000,
+        });
+        this.refresh$.next();
+      });
   }
 
   public submit() {
@@ -157,6 +221,8 @@ export class EditComponent {
           )
         )
       )
-      .subscribe();
+      .subscribe(() => {
+        this.snackbar.open('Deck mis à jour', 'Ok', { duration: 5000 });
+      });
   }
 }

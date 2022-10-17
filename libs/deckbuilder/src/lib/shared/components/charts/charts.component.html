@@ -4,8 +4,9 @@
     <span class="material-symbols-outlined expand-button">expand_more</span>
   </div>
   <div *ngIf="cardListAccordion.expanded" class="livre-sacre-details" @expand>
-    <div *ngFor="let type of typesLivreSacre">
-      {{ type.label }} : {{ (cards | map: byType: type.id).length }}
+    <div *ngFor="let type of typesLivreSacre" class="type">
+      <span>{{ type.label }}</span>
+      <span>{{ (cards | map: byType: type.id).length }}</span>
     </div>
   </div>
 </div>

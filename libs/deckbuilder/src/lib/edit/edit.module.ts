@@ -11,6 +11,7 @@ import {
   ChartsModule,
   KingdomSelectModule,
 } from '../shared';
+import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
 
 @NgModule({
   declarations: [EditComponent],
@@ -24,6 +25,8 @@ import {
     KingdomSelectModule,
     CardTypeSelectModule,
     ChartsModule,
+    DeckSettingsModaleModule,
+    SelectDeityModaleModule,
   ],
 })
 export class EditModule {}

@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { switchMap, of, EMPTY } from 'rxjs';
 
-import { NewDeckConfigModaleComponent } from '../modales/new-deck-config-modale/new-deck-config-modale.component';
-import { SelectDeityModaleComponent } from '../modales/select-deity-modale/select-deity-modale.component';
+import {
+  NewDeckConfigModaleComponent,
+  SelectDeityModaleComponent,
+} from '../modales';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +50,15 @@ export class DecksService {
       .subscribe((deck: any) => this.router.navigate(['decks/edit', deck.id]));
   }
 
-  public update(id: string, cards: any): any {
+  public updateSettings(id: string, settings: any) {
+    return this.http.post(`decks/${id}/settings`, settings);
+  }
+
+  public updateDeity(id: any, deity: any): any {
+    return this.http.post(`decks/${id}/deity`, { deityId: deity.id });
+  }
+
+  public update(id: string, cards: any) {
     return this.http.post(`decks/${id}`, cards);
   }
 }
