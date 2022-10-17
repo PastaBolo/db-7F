@@ -2,7 +2,23 @@
 
 :host {
   display: grid;
-  grid-template-columns: 0.75fr 2fr;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .name {
+    margin-right: 1rem;
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 0.75fr 1fr 1fr;
   gap: 2rem;
 
   > * {
@@ -12,7 +28,7 @@
 
 .deck-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, 25rem);
   grid-auto-rows: min-content;
   gap: 1rem;
 }
@@ -117,36 +133,5 @@
     > * {
       width: 1.5rem;
     }
-    
-    // > * {
-    //   display: flex;
-    //   align-items: center;
-    //   gap: 0.25rem;
-    //   width: 2.75rem;
-      
-    //   > *:nth-child(2) {
-    //     flex: 1;
-    //     text-align: center;
-    //   }
-    
-    //   .material-symbols-outlined {
-    //     font-size: 1.25rem;
-    //   }
-    // }
-
-    // .revoquer {
-    //   position: relative;
-
-    //   &:before {
-    //     content: '';
-    //     position: absolute;
-    //     height: 1.5rem;
-    //     width: 2px;
-    //     top: -4px;
-    //     transform: rotate(45deg);
-    //     transform-origin: bottom;
-    //     background: #ccc;
-    //   }
-    // }
   }
 }

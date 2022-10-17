@@ -1,17 +1,23 @@
 <ng-container *ngIf="data$ | async as data">
-  <div>
-    <div class="text-2xl">{{ data.deck.name }}</div>
+  <div class="header">
+    <div class="text-2xl name">{{ data.deck.name }}</div>
     <a [routerLink]="['../edit', data.deck.id]">
-      <button *isCurrentUserId="data.creator.uid" mat-raised-button>Editer</button>
+      <button *isCurrentUserId="data.creator.uid" mat-icon-button>
+        <span class="material-icons">edit</span>
+      </button>
     </a>
-    <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
-    <seven-fallen-charts [cards]="cards$ | async"></seven-fallen-charts>
   </div>
+  <div class="container">
+    <div>
+      <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
+      <seven-fallen-charts [cards]="cards$ | async"></seven-fallen-charts>
+    </div>
 
-  <div class="deck-container">
-    <ng-container *ngFor="let type of types">
-      <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: cards$ | async, type: type }"></ng-container>
-    </ng-container>
+    <div class="deck-container">
+      <ng-container *ngFor="let type of types">
+        <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: cards$ | async, type: type }"></ng-container>
+      </ng-container>
+    </div>
   </div>
 </ng-container>
 

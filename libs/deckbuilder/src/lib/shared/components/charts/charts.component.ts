@@ -46,8 +46,6 @@ export class ChartsComponent {
     { id: 'Miracle', label: 'Miracles' },
   ];
 
-  // private graphDialog?: MatDialogRef<ChartsComponent, void>;
-
   public readonly averageCosts = (cards: Cards): ChartData => ({
     labels: ['Anges', 'Golems', 'Bénédictions', 'Equipements'],
     datasets: [
@@ -126,9 +124,4 @@ export class ChartsComponent {
     deck.filter((item) =>
       this.typesLivreSacre.map((type) => type.id).includes(item.type)
     ).length;
-
-  public readonly getChart = (
-    charts: { [key: string]: ChartData },
-    type: string
-  ) => charts[type];
 }
