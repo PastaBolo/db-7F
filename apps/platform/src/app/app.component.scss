@@ -47,8 +47,19 @@ mat-drawer {
 }
 
 main {
+  display: flex;
+  justify-content: center;
   height: 100%;
   width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+
+  > ::ng-deep *:not(router-outlet) {
+    display: block;
+    max-height: 100%;
+    width: 100%;
+  }
 }
 
 .settings-options {

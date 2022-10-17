@@ -18,7 +18,8 @@ export class UsersService {
     this.authService.isLoggedIn$.pipe(
       switchMap((isLoggedIn) =>
         isLoggedIn ? this.http.get<User>('user') : NEVER
-      )
+      ),
+      shareReplay(1)
     ),
     this.updateUser$.pipe(
       switchMap((user) => this.http.post<User>('user', user))
@@ -33,6 +34,7 @@ export class UsersService {
   ) {}
 
   public get(uid: string) {
+    console.log(uid);
     return this.http.get<any>(`users/${uid}`);
   }
 

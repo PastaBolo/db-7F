@@ -1,5 +1,6 @@
 <nav>
   <a *isNotLoggedIn class="material-icons" routerLink="auth">login</a>
+  <span class="material-icons" routerLink="." (click)="drawer.close()">home</span>
   <span *isLoggedIn class="material-icons" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
   <span class="material-icons" (click)="drawer.close()">menu_book</span>
   <span class="material-icons" (click)="drawer.close()">search</span>
@@ -12,7 +13,7 @@
   <mat-drawer #drawer mode="over">
     <div *isLoggedIn class="mat-drawer-content">
       <div (click)="drawer.close(); createNewDeck()">Créer un deck</div>
-      <div><a [routerLink]="" (click)="drawer.close()">Voir mes decks</a></div>
+      <div><a [routerLink]="['users', (currentUser$ | async)?.uid]" (click)="drawer.close()">Voir mes decks</a></div>
       <div><a [routerLink]="" (click)="drawer.close()">Rechercher un deck</a></div>
     </div>
   </mat-drawer>

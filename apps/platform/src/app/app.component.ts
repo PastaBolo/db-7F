@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DecksService } from '@seven-fallen/deckbuilder';
 import { AuthService } from '@seven-fallen/shared/auth';
+import { UsersService } from '@seven-fallen/shared/services';
 
 @Component({
   selector: 'seven-fallen-root',
@@ -10,10 +11,13 @@ import { AuthService } from '@seven-fallen/shared/auth';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public readonly currentUser$ = this.usersService.currentUser$;
+
   constructor(
     private readonly dialog: MatDialog,
     private readonly authService: AuthService,
-    private readonly decksService: DecksService
+    private readonly decksService: DecksService,
+    private readonly usersService: UsersService
   ) {}
 
   public createNewDeck(): void {

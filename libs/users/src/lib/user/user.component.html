@@ -1,11 +1,20 @@
 <ng-container *ngIf="user$ | async as user">
-  <div>{{ user.name }}</div>
-  <div>
+  <div *ngIf="user.uid !== (uid$ | async)">{{ user.name }}</div>
+  <div *ngIf="user.uid === (uid$ | async)">Mes decks</div>
+  <div class="decks">
     <a *ngFor="let deck of user.decks" [routerLink]="['../..', 'decks', deck.id]">
-      <mat-card class="user">
-        <mat-card-title>{{ deck.name }}</mat-card-title>
-        <mat-card-content>Divinité : {{ deck.deity.name }}</mat-card-content>
-        <mat-card-content>Royaume : {{ deck.deity.kingdom.name }}</mat-card-content>
+      <mat-card class="deck">
+        <mat-card-content>
+          <div class="flex">
+            <div class="details flex column justify-around">
+              <div class="text-xl title">{{ deck.name }}</div>
+              <div>{{ deck.deity.name }}</div>
+            </div>
+            <div class="image-container">
+              <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
+            </div>
+          </div>
+        </mat-card-content>
       </mat-card>
     </a>
   </div>

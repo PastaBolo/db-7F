@@ -5,7 +5,7 @@
       <span>Créer un deck</span>
     </div>
   </button>
-  <button mat-raised-button routerLink="decks">
+  <button mat-raised-button [routerLink]="['users', (currentUser$ | async)?.uid]">
     <div class="flex align-center text-l">
       <span class="material-icons" style="transform: rotate(180deg)">style</span>
       <span>Voir mes decks</span>
