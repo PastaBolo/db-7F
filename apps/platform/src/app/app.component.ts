@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { DecksService } from '@seven-fallen/deckbuilder';
+import { AuthService } from '@seven-fallen/shared/auth';
 
 @Component({
   selector: 'seven-fallen-root',
@@ -10,16 +11,16 @@ import { DecksService } from '@seven-fallen/deckbuilder';
 })
 export class AppComponent {
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly authService: AuthService,
     private readonly decksService: DecksService
   ) {}
 
   public createNewDeck(): void {
-    this.decksService
-      .createNewDeck()
-      .subscribe((deck: any) =>
-        this.router.navigate(['edit', deck.id], { relativeTo: this.route })
-      );
+    this.decksService.createNewDeck();
+  }
+
+  public signOut(): void {
+    this.authService.signOut().subscribe(() => this.router.navigate(['auth']));
   }
 }

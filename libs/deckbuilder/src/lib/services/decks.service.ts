@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { switchMap, of, EMPTY } from 'rxjs';
 
@@ -12,6 +13,7 @@ import { SelectDeityModaleComponent } from '../modales/select-deity-modale/selec
 export class DecksService {
   constructor(
     private readonly http: HttpClient,
+    private readonly router: Router,
     private readonly dialog: MatDialog
   ) {}
 
@@ -42,7 +44,8 @@ export class DecksService {
             name: values.config.name,
           })
         )
-      );
+      )
+      .subscribe((deck: any) => this.router.navigate(['decks/edit', deck.id]));
   }
 
   public update(id: string, cards: any): any {

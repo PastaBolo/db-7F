@@ -1,2 +1,36 @@
-<p>home works!</p>
-<button (click)="signOut()">Déconnexion</button>
+<button mat-raised-button>
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">add</span>
+    <span>Créer un deck</span>
+  </div>
+</button>
+<button mat-raised-button routerLink="decks">
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">search</span>
+    <span>Chercher un deck</span>
+  </div>
+</button>
+<button mat-raised-button routerLink="codex">
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">menu_book</span>
+    <span>Consulter le codex</span>
+  </div>
+</button>
+<button mat-raised-button routerLink="lexique">
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">summarize</span>
+    <span>Consulter le lexique</span>
+  </div>
+</button>
+<button mat-raised-button routerLink="">
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">group</span>
+    <span>Mes groupes et amis</span>
+  </div>
+</button>
+<button mat-raised-button routerLink="">
+  <div class="flex align-center text-l gap">
+    <span class="material-icons">person_search</span>
+    <span>Rechercher un utilisateur</span>
+  </div>
+</button>

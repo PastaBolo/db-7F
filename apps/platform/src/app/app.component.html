@@ -5,19 +5,19 @@
   <span class="material-icons" (click)="drawer.close()">summarize</span>
   <span class="material-icons" (click)="drawer.close()">group</span>
   <span class="material-icons" (click)="drawer.close()">person_search</span>
-  <span class="material-icons" style="margin-top: auto">settings</span>
+  <span class="material-icons" (click)="signOut()" style="margin-top: auto">settings</span>
 </nav>
-<main>
-  <mat-drawer-container autosize hasBackdrop>
-    <mat-drawer #drawer mode="over">
-      <div class="mat-drawer-content">
-        <div (click)="createNewDeck()">Créer un deck</div>
-        <div><a [routerLink]="">Voir mes decks</a></div>
-        <div><a [routerLink]="">Voir tous les decks</a></div>
-      </div>
-    </mat-drawer>
-    <mat-drawer-content>
+<mat-drawer-container autosize hasBackdrop>
+  <mat-drawer #drawer mode="over">
+    <div class="mat-drawer-content">
+      <div (click)="drawer.close(); createNewDeck()">Créer un deck</div>
+      <div><a [routerLink]="" (click)="drawer.close()">Voir mes decks</a></div>
+      <div><a [routerLink]="" (click)="drawer.close()">Chercher un deck</a></div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <main>
       <router-outlet></router-outlet>
-    </mat-drawer-content>
-  </mat-drawer-container>
-</main>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
