@@ -6,11 +6,35 @@ export class CardsService {
   constructor(private readonly http: HttpClient) {}
 
   public search({
-    kingdomId,
     type,
-  }: Partial<{ kingdomId: string; type: number }>) {
+    kingdomId,
+    classId,
+    abilityId,
+  }: Partial<{
+    type: number;
+    kingdomId: string;
+    classId: string | null;
+    abilityId: string | null;
+  }>) {
     return this.http.get<any[]>('cards/search', {
-      params: { ...(kingdomId && { kingdomId }), ...(type && { type }) },
+      params: {
+        ...(type && { type }),
+        ...(kingdomId && { kingdomId }),
+        ...(classId && { classId }),
+        ...(abilityId && { abilityId }),
+      },
+    });
+  }
+
+  public getClasses(kingdomId?: string) {
+    return this.http.get<any[]>('cards/classes', {
+      params: { ...(kingdomId && { kingdomId }) },
+    });
+  }
+
+  public getAbilities(kingdomId?: string) {
+    return this.http.get<any[]>('cards/abilities', {
+      params: { ...(kingdomId && { kingdomId }) },
     });
   }
 }

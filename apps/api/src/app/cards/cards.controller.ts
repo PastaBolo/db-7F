@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Optional,
   ParseIntPipe,
   Query,
   UseInterceptors,
@@ -16,15 +17,29 @@ export class CardsController {
   @Get('search')
   @UseInterceptors(Neo4jArraySerializerInterceptor)
   public search(
+    @Query('type', ParseIntPipe) type: number,
     @Query('kingdomId') kingdomId: string,
-    @Query('type', ParseIntPipe) type: number
+    @Query('classId') classId: string,
+    @Query('abilityId') abilityId: string
   ) {
-    return this.cardsService.search({ kingdomId, type });
+    return this.cardsService.search({ type, kingdomId, classId, abilityId });
   }
 
   @Get('deities')
   @UseInterceptors(Neo4jArraySerializerInterceptor)
   public getDeities() {
     return this.cardsService.getDeities();
+  }
+
+  @Get('classes')
+  @UseInterceptors(Neo4jArraySerializerInterceptor)
+  public getClasses(@Optional() @Query('kingdomId') kingdomId?: string) {
+    return this.cardsService.getClasses(kingdomId);
+  }
+
+  @Get('abilities')
+  @UseInterceptors(Neo4jArraySerializerInterceptor)
+  public getAbilities(@Optional() @Query('kingdomId') kingdomId?: string) {
+    return this.cardsService.getAbilities(kingdomId);
   }
 }

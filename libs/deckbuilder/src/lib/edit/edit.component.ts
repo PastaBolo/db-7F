@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -12,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   combineLatest,
+  distinctUntilChanged,
   filter,
   map,
   merge,
@@ -81,18 +83,40 @@ export class EditComponent {
   );
 
   public readonly filters$ = this.deck$.pipe(
+    map((deck) => deck.deity.kingdomId),
+    distinctUntilChanged(),
     map(
-      (deck) =>
+      (kingdomId) =>
         new FormGroup({
-          kingdomId: new FormControl<string>(deck.deity.kingdomId, {
-            nonNullable: true,
-          }),
           type: new FormControl(5, {
             nonNullable: true,
           }),
+          kingdomId: new FormControl<string>(kingdomId, {
+            nonNullable: true,
+          }),
+          classId: new FormControl(null),
+          abilityId: new FormControl(null),
         })
     ),
     shareReplay({ refCount: true, bufferSize: 1 })
+  );
+
+  public readonly classes$ = this.filters$.pipe(
+    switchMap((filters) =>
+      filters
+        .get('kingdomId')!
+        .valueChanges.pipe(startWith(filters.get('kingdomId')!.value))
+    ),
+    switchMap((kingdomId) => this.cardsService.getClasses(kingdomId))
+  );
+
+  public readonly abilities$ = this.filters$.pipe(
+    switchMap((filters) =>
+      filters
+        .get('kingdomId')!
+        .valueChanges.pipe(startWith(filters.get('kingdomId')!.value))
+    ),
+    switchMap((kingdomId) => this.cardsService.getAbilities(kingdomId))
   );
 
   public readonly cardsSearch$ = this.filters$.pipe(

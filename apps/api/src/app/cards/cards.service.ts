@@ -20,15 +20,21 @@ export class CardsService {
   constructor(private readonly neo4jService: Neo4jService) {}
 
   public async search({
-    kingdomId,
     type,
+    kingdomId,
+    classId,
+    abilityId,
   }: {
-    kingdomId?: string;
     type?: number;
+    kingdomId?: string;
+    classId?: string;
+    abilityId?: string;
   }) {
     return await this.neo4jService.read(
       `
         MATCH (c:Card${this.cardType(type)})${this.byKingdom(kingdomId)}
+        ${this.byClass(classId)}
+        ${this.byAbility(abilityId)}
         OPTIONAL MATCH (c)--(i:CardInstance)
         WITH apoc.map.removeKey(c, 'search') as card, i
         RETURN card{.*, images: collect(i.imgSrc)}
@@ -40,6 +46,14 @@ export class CardsService {
     return kingdomId ? `--(:Kingdom {id: '${kingdomId}'})` : '';
   }
 
+  private byClass(classId: string) {
+    return classId ? `MATCH (c)--(:Classe {id: '${classId}'})` : '';
+  }
+
+  private byAbility(abilityId: string) {
+    return abilityId ? `MATCH (c)--(:Ability {id: '${abilityId}'})` : '';
+  }
+
   public async getDeities() {
     return await this.neo4jService.read(
       `
@@ -48,6 +62,42 @@ export class CardsService {
         RETURN { id: c.id, name: c.name, kingdomId: k.id, images: collect(i.imgSrc) }
       `
     );
+  }
+
+  public async getClasses(kingdomId?: string) {
+    return kingdomId
+      ? await this.neo4jService.read(
+          `
+            MATCH (Kingdom {id: $kingdomId})--()--(c:Classe) 
+            WITH DISTINCT c AS c 
+            RETURN properties(c) ORDER BY c.name
+          `,
+          { kingdomId }
+        )
+      : await this.neo4jService.read(
+          `
+            MATCH (c:Classe) 
+            RETURN properties(c) ORDER BY c.name
+          `
+        );
+  }
+
+  public async getAbilities(kingdomId?: string) {
+    return kingdomId
+      ? await this.neo4jService.read(
+          `
+            MATCH (Kingdom {id: $kingdomId})--()--(a:Ability) 
+            WITH DISTINCT a AS a 
+            RETURN properties(a) ORDER BY a.name
+          `,
+          { kingdomId }
+        )
+      : await this.neo4jService.read(
+          `
+            MATCH (a:Ability) 
+            RETURN properties(a) ORDER BY a.name
+          `
+        );
   }
 
   private cardType(type: number) {

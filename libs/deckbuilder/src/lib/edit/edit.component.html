@@ -44,6 +44,26 @@
           <form [formGroup]="filters" class="filters">
             <seven-fallen-kingdom-select formControlName="kingdomId" [value]="deck.deity.kingdomId"></seven-fallen-kingdom-select>
             <seven-fallen-card-type-select formControlName="type"></seven-fallen-card-type-select>
+            <div class="class-ability">
+              <mat-form-field>
+                <mat-label>Classe</mat-label>
+                <mat-select formControlName="classId">
+                  <mat-option *ngFor="let classe of classes$ | async" [value]="classe.id">{{ classe.name }}</mat-option>
+                </mat-select>
+                <button matSuffix mat-icon-button>
+                  <div class="material-icons" (click)="$event.stopPropagation(); filters.get('classId')?.setValue(null)">close</div>
+                </button>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Capacité</mat-label>
+                <mat-select formControlName="abilityId">
+                  <mat-option *ngFor="let ability of abilities$ | async" [value]="ability.id">{{ ability.name }}</mat-option>
+                </mat-select>
+                <button matSuffix mat-icon-button>
+                  <div class="material-icons" (click)="$event.stopPropagation(); filters.get('abilityId')?.setValue(null)">close</div>
+                </button>
+              </mat-form-field>
+            </div>
           </form>
           <ng-container *ngIf="cardsSearch$ | async as cardsSearch">
             <ng-container *ngIf="cardsSearch.length">
