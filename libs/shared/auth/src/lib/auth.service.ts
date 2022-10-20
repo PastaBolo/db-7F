@@ -19,7 +19,10 @@ export class AuthService {
     @Inject(LOCAL_STORAGE) private readonly localStorage: Storage
   ) {
     this.afAuth.onAuthStateChanged((user) => {
-      this._isLoggedIn$.next(!!user);
+      user?.getIdToken().then((token) => {
+        this.refreshStoredToken(token);
+        this._isLoggedIn$.next(!!user);
+      });
     });
   }
 
@@ -28,7 +31,7 @@ export class AuthService {
       this.afAuth.signInWithPopup(new auth.GoogleAuthProvider())
     ).pipe(
       switchMap((credentials) => credentials.user?.getIdToken() || EMPTY),
-      tap((token) => this.localStorage.setItem('token', token)),
+      tap((token) => this.refreshStoredToken(token)),
       tap(() => this._isLoggedIn$.next(true)),
       switchMap(() => this.signIn())
     );
@@ -54,5 +57,9 @@ export class AuthService {
         return EMPTY;
       })
     );
+  }
+
+  private refreshStoredToken(token: string): void {
+    this.localStorage.setItem('token', token);
   }
 }
