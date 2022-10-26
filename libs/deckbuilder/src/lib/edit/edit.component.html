@@ -26,9 +26,9 @@
   </div>
   <div class="container" [class.grid]="gridLayoutAccordion.expanded" [class.show-search]="searchAccordion.expanded">
     <div>
-      <div class="deity-container">
+      <div class="deity-container" (click)="openFullScreen(deck.deity, fullScreenTmpl)">
         <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
-        <button mat-icon-button (click)="editDeity()" class="edit">
+        <button mat-icon-button (click)="editDeity(); $event.stopPropagation()" class="edit">
           <span class="material-symbols-outlined">edit</span>
         </button>
       </div>
@@ -78,7 +78,7 @@
               <div *ngIf="gridLayoutAccordion.expanded" class="cards-grid">
                 <div *ngFor="let card of cardsSearch">
                   <div class="card">
-                    <div class="image-container">
+                    <div (click)="openFullScreen(card, fullScreenTmpl)" class="image-container">
                       <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
                     </div>
                     <div class="quantity">
@@ -123,7 +123,7 @@
             <div *ngIf="gridLayoutAccordion.expanded" class="cards-grid">
               <div *ngFor="let group of cards | map: groupCards">
                 <div class="card">
-                  <div class="image-container">
+                  <div (click)="openFullScreen(group.card, fullScreenTmpl)" class="image-container">
                     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + group.card.images[0]" alt="">
                   </div>
                   <div class="quantity">
@@ -219,4 +219,8 @@
   <div class="card-preview" @fade>
     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
   </div>
+</ng-template>
+
+<ng-template #fullScreenTmpl let-card>
+  <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
 </ng-template>

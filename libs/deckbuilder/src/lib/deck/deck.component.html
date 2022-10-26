@@ -22,7 +22,7 @@
   </div>
   <div class="container" [class.grid]="gridLayoutAccordion.expanded">
     <div>
-      <div class="deity-container">
+      <div class="deity-container" (click)="openFullScreen(data.deck.deity, fullScreenTmpl)">
         <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + data.deck.deity.images[0]" alt="">
       </div>
       <seven-fallen-charts [cards]="cards$ | async"></seven-fallen-charts>
@@ -48,7 +48,7 @@
             <div *ngIf="gridLayoutAccordion.expanded" class="cards-grid">
               <div *ngFor="let group of cards | map: groupCards">
                 <div class="card">
-                  <div class="image-container">
+                  <div (click)="openFullScreen(group.card, fullScreenTmpl)" class="image-container">
                     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + group.card.images[0]" alt="">
                   </div>
                   <div class="quantity">{{ group.qty }}</div>
@@ -136,4 +136,8 @@
   <div class="card-preview" @fade>
     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
   </div>
+</ng-template>
+
+<ng-template #fullScreenTmpl let-card>
+  <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
 </ng-template>

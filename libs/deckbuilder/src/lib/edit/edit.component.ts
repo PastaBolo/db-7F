@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -254,5 +254,12 @@ export class EditComponent {
       .subscribe(() => {
         this.snackbar.open('Deck mis à jour', 'Ok', { duration: 5000 });
       });
+  }
+
+  public openFullScreen(
+    card: any,
+    tmpl: TemplateRef<{ $implicit: any }>
+  ): void {
+    this.dialog.open(tmpl, { data: card, panelClass: 'full-screen-card' });
   }
 }

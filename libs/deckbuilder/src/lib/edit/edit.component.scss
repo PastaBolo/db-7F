@@ -63,6 +63,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 
   .edit {
     position: absolute; 
@@ -184,6 +185,12 @@
       @include mat.elevation(6);
       border-radius: 0.5rem;
       overflow: hidden;
+      cursor: pointer;
+      transition: all 200ms ease-in-out;
+      
+      &:hover {
+        @include mat.elevation(10);
+      }
     }
   }
 }

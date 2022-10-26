@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   trigger,
@@ -7,6 +7,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
 import { map, shareReplay, switchMap } from 'rxjs';
 
 import { DecksService } from '../services/decks.service';
@@ -88,6 +89,14 @@ export class DeckComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog,
     private readonly decksService: DecksService
   ) {}
+
+  public openFullScreen(
+    card: any,
+    tmpl: TemplateRef<{ $implicit: any }>
+  ): void {
+    this.dialog.open(tmpl, { data: card, panelClass: 'full-screen-card' });
+  }
 }
