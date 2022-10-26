@@ -21,6 +21,12 @@ import { DecksService } from '../services/decks.service';
       state('void', style({ height: 0, opacity: 0 })),
       transition('* => *', animate('150ms ease-in-out')),
     ]),
+    trigger('fade', [
+      state('*', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition(':enter', animate('150ms 200ms ease-in-out')),
+      transition(':leave', animate('150ms ease-in-out')),
+    ]),
   ],
 })
 export class DeckComponent {

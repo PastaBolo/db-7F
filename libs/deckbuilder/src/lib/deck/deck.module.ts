@@ -4,7 +4,12 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
-import { PermissionsModule, MapperModule, LetModule } from '@seven-fallen/ui';
+import {
+  PermissionsModule,
+  MapperModule,
+  LetModule,
+  PreviewOverModule,
+} from '@seven-fallen/ui';
 import { DeckComponent } from './deck.component';
 import { ChartsModule } from '../shared';
 
@@ -20,6 +25,7 @@ import { ChartsModule } from '../shared';
     ChartsModule,
     PermissionsModule,
     LetModule,
+    PreviewOverModule,
   ],
 })
 export class DeckModule {}
