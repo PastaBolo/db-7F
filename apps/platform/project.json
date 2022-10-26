@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/platform",
         "index": "apps/platform/src/index.html",
@@ -24,6 +26,7 @@
         ],
         "styles": [
           "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+          "./node_modules/@angular/cdk/overlay-prebuilt.css",
           "apps/platform/src/styles.scss"
         ],
         "scripts": []
@@ -82,12 +85,17 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/platform/**/*.ts", "apps/platform/**/*.html"]
+        "lintFilePatterns": [
+          "apps/platform/**/*.ts",
+          "apps/platform/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/platform"],
+      "outputs": [
+        "coverage/apps/platform"
+      ],
       "options": {
         "jestConfig": "apps/platform/jest.config.ts",
         "passWithNoTests": true

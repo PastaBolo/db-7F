@@ -8,17 +8,20 @@
       <button mat-icon-button (click)="submit()">
         <span class="material-symbols-outlined">save</span>
       </button>
-      <button mat-icon-button cdkAccordionItem #searchAccordion="cdkAccordionItem" expanded (click)="searchAccordion.toggle()" [class.selected]="searchAccordion.expanded" style="margin-left: auto;">
-        <span class="material-symbols-outlined">search</span>
+      <button mat-icon-button matTooltip="Prévisualisation" cdkAccordionItem #previewAccordion="cdkAccordionItem" expanded (click)="previewAccordion.toggle()" [class.selected]="previewAccordion.expanded" [class.hidden]="!listLayoutAccordion.expanded" style="margin-left: auto;">
+        <span class="material-symbols-outlined">preview</span>
       </button>
       <ng-container cdkAccordion>
-        <button mat-icon-button cdkAccordionItem #gridLayoutAccordion="cdkAccordionItem" (click)="gridLayoutAccordion.open()" [class.selected]="gridLayoutAccordion.expanded">
+        <button mat-icon-button matTooltip="Vue grille" cdkAccordionItem #gridLayoutAccordion="cdkAccordionItem" (click)="gridLayoutAccordion.open()" [class.selected]="gridLayoutAccordion.expanded">
           <span class="material-symbols-outlined">apps</span>
         </button>
-        <button mat-icon-button cdkAccordionItem #listLayoutAccordion="cdkAccordionItem" expanded (click)="listLayoutAccordion.open()" [class.selected]="listLayoutAccordion.expanded">
+        <button mat-icon-button matTooltip="Vue liste" cdkAccordionItem #listLayoutAccordion="cdkAccordionItem" expanded (click)="listLayoutAccordion.open()" [class.selected]="listLayoutAccordion.expanded">
           <span class="material-symbols-outlined">list</span>
         </button>
       </ng-container>
+      <button mat-icon-button matTooltip="Recherche" cdkAccordionItem #searchAccordion="cdkAccordionItem" expanded (click)="searchAccordion.toggle()" [class.selected]="searchAccordion.expanded">
+        <span class="material-symbols-outlined">search</span>
+      </button>
     </div>
   </div>
   <div class="container" [class.grid]="gridLayoutAccordion.expanded" [class.show-search]="searchAccordion.expanded">
@@ -87,7 +90,7 @@
                 </div>
               </div>
               <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
-                <div *ngFor="let card of cardsSearch" class="card">
+                <div *ngFor="let card of cardsSearch" [previewOver]="cardPreviewTmpl" [previewContext]="{ $implicit: card }" [previewDisabled]="!previewAccordion.expanded" class="card">
                   <div class="quantity">
                     <div class="button" (click)="remove(card)">-</div>
                     <div>{{ card | map: getQuantity: deckCards }}</div>
@@ -132,7 +135,7 @@
               </div>
             </div>
             <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
-              <div *ngFor="let group of cards | map: groupCards" class="card">
+              <div *ngFor="let group of cards | map: groupCards" [previewOver]="cardPreviewTmpl" [previewContext]="{ $implicit: group.card }" [previewDisabled]="!previewAccordion.expanded" class="card">
                 <div class="quantity">
                   <div class="button" (click)="remove(group.card)">-</div>
                   <div>{{ group.qty }}</div>
@@ -209,5 +212,11 @@
     <div *ngIf="card.tempete !== undefined" class="center">{{ card.tempete }}</div>
     <div *ngIf="card.adorateur !== undefined" class="center">{{ card.adorateur }}</div>
     <div *ngIf="card.revoquer !== undefined" class="center">{{ card.revoquer }}</div>
+  </div>
+</ng-template>
+
+<ng-template #cardPreviewTmpl let-card>
+  <div class="card-preview" @fade>
+    <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + card.images[0]" alt="">
   </div>
 </ng-template>

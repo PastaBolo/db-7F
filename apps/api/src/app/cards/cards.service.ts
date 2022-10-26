@@ -86,7 +86,7 @@ export class CardsService {
     return kingdomId
       ? await this.neo4jService.read(
           `
-            MATCH (Kingdom {id: $kingdomId})--()--(a:Ability) 
+            MATCH (Kingdom {id: $kingdomId})--(:Archange)--(a:Ability) 
             WITH DISTINCT a AS a 
             RETURN properties(a) ORDER BY a.name
           `,

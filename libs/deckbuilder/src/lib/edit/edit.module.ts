@@ -4,9 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
-import { LetModule, MapperModule } from '@seven-fallen/ui';
+import { LetModule, MapperModule, PreviewOverModule } from '@seven-fallen/ui';
 import { EditComponent } from './edit.component';
 import {
   CardTypeSelectModule,
@@ -23,6 +24,7 @@ import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatTooltipModule,
     CdkAccordionModule,
     LetModule,
     MapperModule,
@@ -31,6 +33,7 @@ import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
     ChartsModule,
     DeckSettingsModaleModule,
     SelectDeityModaleModule,
+    PreviewOverModule,
   ],
 })
 export class EditModule {}
