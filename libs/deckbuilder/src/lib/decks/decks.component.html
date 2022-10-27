@@ -1,0 +1,16 @@
+<form [formGroup]="filters" class="filters">
+  <seven-fallen-kingdom-select formControlName="kingdomId"></seven-fallen-kingdom-select>
+  <mat-form-field>
+    <mat-label>Divinité</mat-label>
+    <mat-select formControlName="deityId">
+      <mat-option *ngFor="let deity of deities$ | async" [value]="deity.id">{{ deity.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div class="decks-container">
+  <a *ngFor="let deck of decks$ | async" [routerLink]="deck.id" class="deck">
+    <div class="text-l">{{ deck.name }}</div>
+    <div class="text-sm">{{ deck.user.name }}</div>
+  </a>
+</div>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="user$ | async as user">
-  <div *ngIf="user.uid !== (uid$ | async)">{{ user.name }}</div>
-  <div *ngIf="user.uid === (uid$ | async)">Mes decks</div>
-  <div class="decks">
+  <div *ngIf="user.uid !== (uid$ | async)" class="text-2xl">{{ user.name }}</div>
+  <div *ngIf="user.uid === (uid$ | async)" class="text-2xl">Mes decks</div>
+  <div class="decks-container">
     <a *ngFor="let deck of user.decks" [routerLink]="['../..', 'decks', deck.id]">
       <mat-card class="deck">
         <mat-card-content>

@@ -19,6 +19,17 @@ export class DecksService {
     );
   }
 
+  public async search({ deityId }: { deityId?: string }) {
+    return await this.neo4jService.read(
+      `
+        MATCH (u:User)-[:HAS_BUILT]->(d:Deck)-[:HAS_DEITY]->(:Divinite {id: $deityId})
+        WHERE NOT d:Private
+        RETURN { id: d.id, name: d.name, user: properties(u) }
+      `,
+      { deityId }
+    );
+  }
+
   public async create(uid: string, deityId: string) {
     return await this.neo4jService.write(
       `

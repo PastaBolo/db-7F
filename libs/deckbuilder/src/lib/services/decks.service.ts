@@ -23,6 +23,16 @@ export class DecksService {
     return this.http.get<any>(`decks/${id}`);
   }
 
+  public search({
+    deityId,
+  }: Partial<{
+    deityId: string;
+  }>) {
+    return this.http.get<any[]>(`decks/search`, {
+      params: { ...(deityId && { deityId }) },
+    });
+  }
+
   public createNewDeck() {
     return this.dialog
       .open(KingdomSelectModaleComponent)

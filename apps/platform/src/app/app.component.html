@@ -14,7 +14,7 @@
     <div *isLoggedIn class="mat-drawer-content">
       <div (click)="drawer.close(); createNewDeck()">Créer un deck</div>
       <div><a [routerLink]="['users', (currentUser$ | async)?.uid]" (click)="drawer.close()">Voir mes decks</a></div>
-      <div><a [routerLink]="" (click)="drawer.close()">Rechercher un deck</a></div>
+      <div><a routerLink="decks" (click)="drawer.close()">Rechercher un deck</a></div>
     </div>
   </mat-drawer>
   <mat-drawer-content>
