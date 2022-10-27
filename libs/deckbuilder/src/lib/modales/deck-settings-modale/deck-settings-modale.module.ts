@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DeckSettingsModaleComponent } from './deck-settings-modale.component';
@@ -20,6 +21,7 @@ import { DeckSettingsModaleComponent } from './deck-settings-modale.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCheckboxModule,
     MatSnackBarModule,
   ],
 })

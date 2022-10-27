@@ -13,7 +13,7 @@ export class DecksService {
         OPTIONAL MATCH (de)--(iDeity:CardInstance)
         OPTIONAL MATCH (c:Card)--(i:CardInstance) 
         WITH (c{.*, images: collect(i.imgSrc)}) as card, deck, de{.*, images: collect(iDeity.imgSrc)} as deity, kingdom, user
-        RETURN { deck: deck{.*, deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card), creator: properties(user) }
+        RETURN { deck: deck{.*, private:  apoc.label.exists(deck, "Private"), deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card), creator: properties(user) }
         `,
       { id }
     );
@@ -24,9 +24,9 @@ export class DecksService {
       `
         MATCH (u:User {uid: $uid})
         MATCH (c:Card:Divinite {id: $deityId})-->(k:Kingdom)
-        CREATE (u)-[:HAS_BUILT]->(d:Deck {id: apoc.create.uuid(), name: 'Nouveau Deck', cards: []})-[:HAS_DEITY]->(c)
+        CREATE (u)-[:HAS_BUILT]->(d:Deck:Private {id: apoc.create.uuid(), name: 'Nouveau Deck', cards: []})-[:HAS_DEITY]->(c)
         WITH apoc.map.removeKey(c, 'search') AS deity, d AS deck, k AS kingdom
-        RETURN deck{.*, deity: deity{.*, kingdom: properties(kingdom)}}
+        RETURN deck{.*, private:  apoc.label.exists(deck, "Private"), deity: deity{.*, kingdom: properties(kingdom)}}
       `,
       { uid, deityId }
     );
@@ -47,12 +47,13 @@ export class DecksService {
   public async updateSettings(
     uid: string,
     id: string,
-    settings: { name: string }
+    settings: { name: string; private: boolean }
   ) {
     await this.neo4jService.write(
       `
         OPTIONAL MATCH (:User {uid: $uid})-[:HAS_BUILT]->(d:Deck {id: $id})
         SET d.name = $settings.name
+        ${settings.private ? 'SET d :Private' : 'REMOVE d :Private'}
         RETURN d
       `,
       { uid, id, settings }

@@ -40,7 +40,10 @@ export class DecksService {
       .subscribe((deck: any) => this.router.navigate(['decks/edit', deck.id]));
   }
 
-  public updateSettings(id: string, settings: any) {
+  public updateSettings(
+    id: string,
+    settings: { name: string; private: boolean }
+  ) {
     return this.http.post(`decks/${id}/settings`, settings);
   }
 

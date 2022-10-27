@@ -196,7 +196,7 @@ export class EditComponent {
         switchMap((deck) =>
           this.dialog
             .open(DeckSettingsModaleComponent, {
-              data: { name: deck.name },
+              data: deck,
             })
             .afterClosed()
             .pipe(

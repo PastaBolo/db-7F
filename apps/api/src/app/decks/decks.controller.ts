@@ -45,7 +45,7 @@ export class DecksController {
   public updateSettings(
     @UserId() uid: string,
     @Param('id') id: string,
-    @Body() settings: { name: string }
+    @Body() settings: { name: string; private: boolean }
   ) {
     return this.decksService.updateSettings(uid, id, settings);
   }

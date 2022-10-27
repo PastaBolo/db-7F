@@ -9,12 +9,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeckSettingsModaleComponent {
   public readonly form = new FormGroup({
-    name: new FormControl(this.settings.name, [Validators.required]),
+    name: new FormControl(this.deck.name, [Validators.required]),
+    private: new FormControl(this.deck.private, [Validators.required]),
   });
 
   constructor(
     private readonly dialogRef: MatDialogRef<void>,
-    @Inject(MAT_DIALOG_DATA) private readonly settings: { name: string }
+    @Inject(MAT_DIALOG_DATA)
+    private readonly deck: { name: string; private: boolean }
   ) {}
 
   public close(): void {
