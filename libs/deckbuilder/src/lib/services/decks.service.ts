@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { switchMap, of, EMPTY } from 'rxjs';
 
 import {
-  NewDeckConfigModaleComponent,
+  KingdomSelectModaleComponent,
   SelectDeityModaleComponent,
 } from '../modales';
 
@@ -25,27 +25,17 @@ export class DecksService {
 
   public createNewDeck() {
     return this.dialog
-      .open(SelectDeityModaleComponent)
+      .open(KingdomSelectModaleComponent)
       .afterClosed()
       .pipe(
-        switchMap((deity?: any) =>
-          deity
+        switchMap((kingdomId?: string) =>
+          kingdomId
             ? this.dialog
-                .open(NewDeckConfigModaleComponent)
+                .open(SelectDeityModaleComponent, { data: { kingdomId } })
                 .afterClosed()
-                .pipe(
-                  switchMap((formValue?: any) =>
-                    formValue ? of({ deity, config: formValue }) : EMPTY
-                  )
-                )
             : EMPTY
         ),
-        switchMap((values) =>
-          this.http.post('decks', {
-            deityId: values.deity.id,
-            name: values.config.name,
-          })
-        )
+        switchMap((deityId) => this.http.post('decks', { deityId }))
       )
       .subscribe((deck: any) => this.router.navigate(['decks/edit', deck.id]));
   }

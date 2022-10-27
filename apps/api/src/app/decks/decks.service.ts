@@ -19,16 +19,16 @@ export class DecksService {
     );
   }
 
-  public async create(uid: string, deityId: string, name: string) {
+  public async create(uid: string, deityId: string) {
     return await this.neo4jService.write(
       `
         MATCH (u:User {uid: $uid})
         MATCH (c:Card:Divinite {id: $deityId})-->(k:Kingdom)
-        CREATE (u)-[:HAS_BUILT]->(d:Deck {id: apoc.create.uuid(), name: $name, cards: []})-[:HAS_DEITY]->(c)
+        CREATE (u)-[:HAS_BUILT]->(d:Deck {id: apoc.create.uuid(), name: 'Nouveau Deck', cards: []})-[:HAS_DEITY]->(c)
         WITH apoc.map.removeKey(c, 'search') AS deity, d AS deck, k AS kingdom
         RETURN deck{.*, deity: deity{.*, kingdom: properties(kingdom)}}
       `,
-      { uid, deityId, name }
+      { uid, deityId }
     );
   }
 

@@ -1,0 +1,8 @@
+<div mat-dialog-content class="dialog-content">
+  <div *ngFor="let kingdom of kingdoms" (click)="close(kingdom.id)" class="kingdom">
+    <div class="kingdom-logo">
+      <img [src]="'/assets/deckbuilder/kingdoms/' + kingdom.imgPath" alt="">
+    </div>
+    <div class="text-xs">{{ kingdom.name }}</div>
+  </div>
+</div>

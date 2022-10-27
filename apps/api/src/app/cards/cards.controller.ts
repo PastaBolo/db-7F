@@ -25,12 +25,6 @@ export class CardsController {
     return this.cardsService.search({ type, kingdomId, classId, abilityId });
   }
 
-  @Get('deities')
-  @UseInterceptors(Neo4jArraySerializerInterceptor)
-  public getDeities() {
-    return this.cardsService.getDeities();
-  }
-
   @Get('classes')
   @UseInterceptors(Neo4jArraySerializerInterceptor)
   public getClasses(@Optional() @Query('kingdomId') kingdomId?: string) {

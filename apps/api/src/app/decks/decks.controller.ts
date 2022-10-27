@@ -26,12 +26,8 @@ export class DecksController {
   @Post()
   @UseGuards(AuthGuard('firebase'))
   @UseInterceptors(Neo4jSerializerInterceptor)
-  public create(
-    @UserId() uid: string,
-    @Body('deityId') deityId: string,
-    @Body('name') name: string
-  ) {
-    return this.decksService.create(uid, deityId, name);
+  public create(@UserId() uid: string, @Body('deityId') deityId: string) {
+    return this.decksService.create(uid, deityId);
   }
 
   @Post(':id')

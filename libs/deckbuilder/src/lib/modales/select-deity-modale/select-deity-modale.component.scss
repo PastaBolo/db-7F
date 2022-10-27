@@ -5,12 +5,21 @@
   grid-template-columns: repeat(3, 200px);
   gap: 1.5rem;
 
-  .deity {
-    @include mat.elevation(4);
-    
-    &:hover {
-      @include mat.elevation(8);
+  .deity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .deity {
+      @include mat.elevation(4);
+      border-radius: 0.5rem;
+      overflow: hidden;
       cursor: pointer;
+      transition: all 200ms ease-in-out;
+      
+      &:hover {
+        @include mat.elevation(8);
+      }
     }
   }
 }

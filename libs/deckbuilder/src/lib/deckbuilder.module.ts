@@ -4,7 +4,7 @@ import { DeckbuilderRoutingModule } from './deckbuilder-routing.module';
 import { MainModule } from './main/main.module';
 import { EditModule } from './edit/edit.module';
 import { DeckModule } from './deck/deck.module';
-import { NewDeckConfigModaleModule, SelectDeityModaleModule } from './modales';
+import { KingdomSelectModaleModule, SelectDeityModaleModule } from './modales';
 
 @NgModule({
   imports: [
@@ -12,8 +12,8 @@ import { NewDeckConfigModaleModule, SelectDeityModaleModule } from './modales';
     MainModule,
     EditModule,
     DeckModule,
-    NewDeckConfigModaleModule,
     SelectDeityModaleModule,
+    KingdomSelectModaleModule,
   ],
   providers: [],
 })

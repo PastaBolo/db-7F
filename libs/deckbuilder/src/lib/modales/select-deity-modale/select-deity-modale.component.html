@@ -1,10 +1,10 @@
 <div mat-dialog-content>
   <div class="deities-container">
-    <mat-card *ngFor="let deity of deities$ | async" class="deity" (click)="selectDeity(deity)">
-      {{ deity.name }}
-    </mat-card>
+    <div *ngFor="let deity of deities$ | async" (click)="close(deity.id)" class="deity-container">
+      <div class="deity">
+        <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deity.images[0]" alt="">
+      </div>
+      <div class="flex justify-center text-sm">{{ deity.name }}</div>
+    </div>
   </div>
 </div>
-<mat-dialog-actions align="end">
-  <button mat-raised-button color="warn" type="button" (click)="close()">Annuler</button>
-</mat-dialog-actions>
