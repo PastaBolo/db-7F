@@ -2,13 +2,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
@@ -25,6 +18,7 @@ import {
   take,
 } from 'rxjs';
 
+import { expand, fade } from '@seven-fallen/ui';
 import { CardsService, DecksService } from '../services';
 import {
   DeckSettingsModaleComponent,
@@ -35,19 +29,7 @@ import {
   selector: 'seven-fallen-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
-  animations: [
-    trigger('expand', [
-      state('*', style({ height: '*', opacity: 1 })),
-      state('void', style({ height: 0, opacity: 0 })),
-      transition('* => *', animate('150ms ease-in-out')),
-    ]),
-    trigger('fade', [
-      state('*', style({ opacity: 1 })),
-      state('void', style({ opacity: 0 })),
-      transition(':enter', animate('150ms 200ms ease-in-out')),
-      transition(':leave', animate('150ms ease-in-out')),
-    ]),
-  ],
+  animations: [expand, fade],
 })
 export class EditComponent {
   public refresh$ = new Subject<void>();
