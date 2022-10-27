@@ -1,0 +1,62 @@
+@use '@angular/material' as mat;
+
+.search-container {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  section {
+    .items-container {
+      display: grid;
+      grid-auto-flow: dense;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%/2, max(10rem, 100%/6)), 1fr)
+      );
+      margin: -0.5rem;
+
+      .title-container {
+        @include mat.elevation(2);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 0.5rem;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 150ms ease-in-out;
+
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &:hover {
+          @include mat.elevation(6);
+        }
+        
+        &.selected {
+          @include mat.elevation(6);
+          background: #777;
+        }
+
+        .extension {
+          font-size: 0.8rem;
+          color: #bbb;
+        }
+      }
+
+      .content {
+        grid-column-start: 1;
+        grid-column-end: -1;
+        overflow: hidden;
+        margin: -0.5rem 0.5rem;
+        line-height: 1.5rem;
+      }
+    }
+  }
+}

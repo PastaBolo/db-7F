@@ -1,0 +1,22 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/lexique/src",
+  "prefix": "seven-fallen",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/lexique"],
+      "options": {
+        "jestConfig": "libs/lexique/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/lexique/**/*.ts", "libs/lexique/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

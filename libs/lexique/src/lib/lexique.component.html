@@ -1,0 +1,30 @@
+<ng-container *ngIf="lexique as capacitesLexique">
+  <div class="search-container">
+    <mat-form-field>
+      <mat-label>Rechercher...</mat-label>
+      <input #search matInput type="text">
+      <button [style.visibility]="search.value ? 'visible' : 'hidden'" matSuffix mat-icon-button aria-label="Clear" (click)="search.value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div *let="(capacitesLexique | map: filterBy: search.value) as filteredCapacitesLexique" cdkAccordion class="container">
+    <ng-container *ngTemplateOutlet="itemsTmpl; context: { $implicit: 'capacites', categoryName: 'Capacités' }"></ng-container>
+    <ng-container *ngTemplateOutlet="itemsTmpl; context: { $implicit: 'lexique', categoryName: 'Lexique' }"></ng-container>
+
+    <ng-template #itemsTmpl let-key let-categoryName="categoryName">
+      <section *ngIf="(filteredCapacitesLexique | map: getList: key).length">
+        <h3>{{ categoryName }}</h3>
+        <div *let="filteredCapacitesLexique | map: getList: key | map: sort as items" class="items-container" @fade>
+          <ng-container *ngFor="let item of items" #accordionItem="cdkAccordionItem" cdkAccordionItem [expanded]="filteredCapacitesLexique | map: hasOneItem">
+            <div (click)="accordionItem.toggle()" class="title-container" [class.selected]="accordionItem.expanded">
+              <div class="title">{{ item.title }}</div>
+              <div *ngIf="item.extension" class="extension">{{ item.extension }}</div>
+            </div>
+            <div *ngIf="accordionItem.expanded" [innerHTML]="item.content" @expand class="content"></div>
+          </ng-container>
+        </div>
+      </section>
+    </ng-template>
+  </div>
+</ng-container>

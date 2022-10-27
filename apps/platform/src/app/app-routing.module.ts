@@ -35,6 +35,11 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'lexique',
+    loadChildren: () =>
+      import('@seven-fallen/lexique').then((m) => m.LexiqueModule),
+  },
+  {
     path: 'auth',
     loadChildren: () => import('@seven-fallen/auth').then((m) => m.AuthModule),
     canActivate: [AngularFireAuthGuard],

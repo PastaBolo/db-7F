@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +13,10 @@
 button {
   width: 17rem;
   height: 4rem;
+
+  &:hover {
+    @include mat.elevation(4);
+  }
 }
 
 .material-icons {

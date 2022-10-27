@@ -8,6 +8,7 @@
     "auth": "libs/auth",
     "deckbuilder": "libs/deckbuilder",
     "home": "libs/home",
+    "lexique": "libs/lexique",
     "neo4j": "libs/neo4j",
     "platform": "apps/platform",
     "profile": "libs/profile",
