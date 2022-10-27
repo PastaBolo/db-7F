@@ -2,12 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
 
+import { listFade } from '@seven-fallen/ui';
 import { CardsService, DecksService } from '../services';
 
 @Component({
   selector: 'seven-fallen-decks',
   templateUrl: './decks.component.html',
   styleUrls: ['./decks.component.scss'],
+  animations: [listFade],
 })
 export class DecksComponent implements OnDestroy {
   public readonly filters = new FormGroup({

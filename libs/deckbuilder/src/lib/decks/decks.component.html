@@ -8,9 +8,11 @@
   </mat-form-field>
 </form>
 
-<div class="decks-container">
-  <a *ngFor="let deck of decks$ | async" [routerLink]="deck.id" class="deck">
-    <div class="text-l">{{ deck.name }}</div>
-    <div class="text-sm">{{ deck.user.name }}</div>
-  </a>
-</div>
+<ng-container *ngIf="decks$ | async as decks">
+  <div *ngIf="decks.length" class="decks-container" [@listFade]="decks.length">
+    <a *ngFor="let deck of decks" [routerLink]="deck.id" class="deck">
+      <div class="text-l">{{ deck.name }}</div>
+      <div class="text-sm">{{ deck.user.name }}</div>
+    </a>
+  </div>
+</ng-container>

@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { map, shareReplay, switchMap } from 'rxjs';
 
 import { UsersService } from '@seven-fallen/shared/services';
+import { listFade } from '@seven-fallen/ui';
 
 @Component({
   selector: 'seven-fallen-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
+  animations: [listFade],
 })
 export class UserComponent {
   public readonly uid$ = this.route.params.pipe(
