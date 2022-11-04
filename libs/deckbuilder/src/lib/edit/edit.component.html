@@ -96,7 +96,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
+              <div *ngIf="listLayoutAccordion.expanded" class="search cards-list">
                 <div *ngFor="let card of cardsSearch" [previewOver]="cardPreviewTmpl" [previewContext]="{ $implicit: card }" [previewDisabled]="!previewAccordion.expanded" class="card">
                   <div class="quantity">
                     <div class="button" (click)="remove(card)">-</div>
