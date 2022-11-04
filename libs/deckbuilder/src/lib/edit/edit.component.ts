@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   combineLatest,
   distinctUntilChanged,
+  EMPTY,
   filter,
   map,
   merge,
@@ -201,17 +202,22 @@ export class EditComponent {
   }
 
   public editDeity() {
-    combineLatest({
-      deck: this.deck$,
-      deity: this.dialog
-        .open(SelectDeityModaleComponent)
-        .afterClosed()
-        .pipe(filter((formValue?: any) => !!formValue)),
-    })
+    this.deck$
       .pipe(
         take(1),
-        switchMap(({ deck, deity }: { deck: any; deity: any }) =>
-          this.decksService.updateDeity(deck.id, deity)
+        switchMap((deck) =>
+          this.dialog
+            .open(SelectDeityModaleComponent, {
+              data: { kingdomId: deck.deity.kingdomId },
+            })
+            .afterClosed()
+            .pipe(
+              switchMap((deityId?: string) =>
+                deityId
+                  ? this.decksService.updateDeity(deck.id, deityId)
+                  : EMPTY
+              )
+            )
         )
       )
       .subscribe(() => {

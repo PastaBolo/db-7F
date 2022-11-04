@@ -57,8 +57,8 @@ export class DecksService {
     return this.http.post(`decks/${id}/settings`, settings);
   }
 
-  public updateDeity(id: any, deity: any): any {
-    return this.http.post(`decks/${id}/deity`, { deityId: deity.id });
+  public updateDeity(id: string, deityId: string): any {
+    return this.http.post(`decks/${id}/deity`, { deityId });
   }
 
   public update(id: string, cards: any) {

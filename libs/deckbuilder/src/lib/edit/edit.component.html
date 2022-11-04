@@ -28,7 +28,7 @@
     <div>
       <div class="deity-container" (click)="openFullScreen(deck.deity, fullScreenTmpl)">
         <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + deck.deity.images[0]" alt="">
-        <button mat-icon-button (click)="editDeity(); $event.stopPropagation()" class="edit">
+        <button mat-icon-button (click)="$event.stopPropagation(); editDeity();" class="edit">
           <span class="material-symbols-outlined">edit</span>
         </button>
       </div>

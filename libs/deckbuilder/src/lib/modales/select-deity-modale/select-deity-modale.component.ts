@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CardsService } from '../../services';
 
@@ -18,7 +17,9 @@ export class SelectDeityModaleComponent {
     private readonly dialogRef: MatDialogRef<void>,
     private readonly cardsService: CardsService,
     @Inject(MAT_DIALOG_DATA) public readonly data: { kingdomId: string }
-  ) {}
+  ) {
+    console.log(data);
+  }
 
   public close(deityId?: string): void {
     this.dialogRef.close(deityId);
