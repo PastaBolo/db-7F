@@ -7,7 +7,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 import { SharedAuthModule } from '@seven-fallen/shared/auth';
-import { LoadingModule, PermissionsModule } from '@seven-fallen/ui';
+import {
+  ErrorHandlerModule,
+  LoadingModule,
+  PermissionsModule,
+} from '@seven-fallen/ui';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiUrlInterceptor } from './core';
@@ -26,6 +30,7 @@ import { ApiUrlInterceptor } from './core';
     MatDialogModule,
     MatButtonModule,
     LoadingModule,
+    ErrorHandlerModule,
   ],
   providers: [
     {
