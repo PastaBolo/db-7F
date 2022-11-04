@@ -87,6 +87,13 @@
   gap: 1rem;
 }
 
+.side-divider {
+  background: white;
+  height: 1px;
+  width: 100%;
+  border: none;
+}
+
 .filters {
   display: flex;
   flex-direction: column;
@@ -206,10 +213,21 @@
     
     &:hover {
       @include mat.elevation(6);
+
+      .menu-button {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   
-    .stats {
+    .menu-button {
       margin-left: auto;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 150ms ease-in-out;
+    }
+    
+    .stats {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -227,17 +245,22 @@
     align-items: center;
     gap: 0.25rem;
     margin-right: 0.5rem;
+  }
 
-    .button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #424242;
-      border-radius: 3px;
-      height: 1rem;
-      width: 1rem;
-      cursor: pointer;
-    }
+  .quantity .button, .menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #424242;
+    border-radius: 3px;
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+  }
+
+  .menu-button {
+    border-radius: 50%;
+    font-size: 0.8rem;
   }
 }
 

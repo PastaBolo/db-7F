@@ -39,6 +39,13 @@
       <ng-container *ngFor="let type of types">
         <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckCards$ | async, type: type }"></ng-container>
       </ng-container>
+      <ng-container *ngIf="(deckSide$ | async)!.length">
+        <hr class="side-divider">
+        <div class="text-2xl text-semibold">Side</div>
+        <ng-container *ngFor="let type of types">
+          <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckSide$ | async, type: type, isSide: true }"></ng-container>
+        </ng-container>
+      </ng-container>
     </div>
 
     <ng-container *ngIf="searchAccordion.expanded">
@@ -110,7 +117,7 @@
     </ng-container>
   </div>
 
-  <ng-template #typeTmpl let-cards let-type="type">
+  <ng-template #typeTmpl let-cards let-type="type" let-isSide="isSide">
     <ng-container *let="cards | map: byType: type.type as cards">
       <div *ngIf="cards.length" cdkAccordionItem #cardListAccordion="cdkAccordionItem" expanded class="cards-by-type-container" [class.grid]="gridLayoutAccordion.expanded" [class.expanded]="cardListAccordion.expanded">
         <div (click)="cardListAccordion.toggle()" class="cards-by-type-header">
@@ -127,9 +134,9 @@
                     <img [src]="'https://storage.googleapis.com/cards-f08689ac-5393-4219-84ff-140690b8b6de/' + group.card.images[0]" alt="">
                   </div>
                   <div class="quantity">
-                    <div class="button" (click)="remove(group.card)">-</div>
+                    <div class="button" (click)="!isSide ? remove(group.card) : removeSide(group.card)">-</div>
                     <div>{{ group.qty }}</div>
-                    <div class="button" (click)="add(group.card)">+</div>
+                    <div class="button" (click)="!isSide ? add(group.card) : addSide(group.card)">+</div>
                   </div>
                 </div>
               </div>
@@ -137,11 +144,12 @@
             <div *ngIf="listLayoutAccordion.expanded" class="cards-list">
               <div *ngFor="let group of cards | map: groupCards" [previewOver]="cardPreviewTmpl" [previewContext]="{ $implicit: group.card }" [previewDisabled]="!previewAccordion.expanded" class="card">
                 <div class="quantity">
-                  <div class="button" (click)="remove(group.card)">-</div>
+                  <div class="button" (click)="!isSide ? remove(group.card) : removeSide(group.card)">-</div>
                   <div>{{ group.qty }}</div>
-                  <div class="button" (click)="add(group.card)">+</div>
+                  <div class="button" (click)="!isSide ? add(group.card) : addSide(group.card)">+</div>
                 </div>
                 <div>{{ group.card.name }}</div>
+                <span [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{ $implicit: group.card, qty: group.qty }" class="material-symbols-outlined menu-button">more_horiz</span>
                 <ng-container *ngTemplateOutlet="statsTmpl; context: { $implicit: group.card }"></ng-container>
               </div>
             </div>
@@ -149,8 +157,26 @@
         </ng-container>
       </div>
     </ng-container>
+
+    <mat-menu #cardMenu="matMenu">
+      <ng-template matMenuContent let-card let-qty=qty>
+        <ng-container *ngIf="!isSide">
+          <button mat-menu-item [matMenuTriggerFor]="subMenu">Ajouter au side</button>
+          <mat-menu #subMenu="matMenu">
+            <button *repeat="qty; let i = index" mat-menu-item (click)="fromDeckToSide(card, i)">{{ i + 1 }}</button>
+          </mat-menu>
+        </ng-container>
+        <ng-container *ngIf="isSide">
+          <button mat-menu-item [matMenuTriggerFor]="subMenu">Ajouter au deck</button>
+          <mat-menu #subMenu="matMenu">
+            <button *repeat="qty; let i = index" mat-menu-item (click)="fromSideToDeck(card, i)">{{ i + 1 }}</button>
+          </mat-menu>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
   </ng-template>
 </ng-container>
+
 
 <ng-template #statsIcons let-type>
   <div class="stats-icons">

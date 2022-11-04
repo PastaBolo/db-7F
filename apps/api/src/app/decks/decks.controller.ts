@@ -45,9 +45,9 @@ export class DecksController {
   public update(
     @UserId() uid: string,
     @Param('id') id: string,
-    @Body() cards: any[]
+    @Body() { cards, side }: { cards: any[]; side: any[] }
   ) {
-    return this.decksService.update(uid, id, cards);
+    return this.decksService.update(uid, id, cards, side);
   }
 
   @Post(':id/settings')

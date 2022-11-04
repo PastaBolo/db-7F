@@ -5,9 +5,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
-import { LetModule, MapperModule, PreviewOverModule } from '@seven-fallen/ui';
+import {
+  LetModule,
+  MapperModule,
+  PreviewOverModule,
+  RepeatModule,
+} from '@seven-fallen/ui';
 import { EditComponent } from './edit.component';
 import {
   CardTypeSelectModule,
@@ -25,6 +31,7 @@ import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
     MatFormFieldModule,
     MatSelectModule,
     MatTooltipModule,
+    MatMenuModule,
     CdkAccordionModule,
     LetModule,
     MapperModule,
@@ -34,6 +41,7 @@ import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
     DeckSettingsModaleModule,
     SelectDeityModaleModule,
     PreviewOverModule,
+    RepeatModule,
   ],
 })
 export class EditModule {}

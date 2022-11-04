@@ -49,6 +49,8 @@ export class EditComponent {
 
   public readonly add$ = new Subject<any>();
   public readonly remove$ = new Subject<any>();
+  public readonly addSide$ = new Subject<any>();
+  public readonly removeSide$ = new Subject<any>();
 
   public readonly deckCards$ = merge(
     this.data$.pipe(
@@ -61,6 +63,28 @@ export class EditComponent {
     ),
     this.add$.pipe(map((card) => (cards: any[]) => [...cards, card])),
     this.remove$.pipe(
+      map((card) => (cards: any[]) => {
+        const index = cards.findIndex(({ id }) => id === card.id);
+        return [...cards.slice(0, index), ...cards.slice(index + 1)];
+      })
+    )
+  ).pipe(
+    scan((cards: any[], fn: (cards: any[]) => any[]) => fn(cards), []),
+    shareReplay({ refCount: true, bufferSize: 1 })
+  );
+
+  public readonly deckSide$ = merge(
+    this.data$.pipe(
+      map(
+        (data) =>
+          data.deck.side?.map((id: string) =>
+            data.cardsInfo.find((card: any) => card.id === id)
+          ) ?? []
+      ),
+      map((cards) => () => cards)
+    ),
+    this.addSide$.pipe(map((card) => (cards: any[]) => [...cards, card])),
+    this.removeSide$.pipe(
       map((card) => (cards: any[]) => {
         const index = cards.findIndex(({ id }) => id === card.id);
         return [...cards.slice(0, index), ...cards.slice(index + 1)];
@@ -164,12 +188,34 @@ export class EditComponent {
     private readonly cardsService: CardsService
   ) {}
 
-  public remove(card: any) {
+  public remove(card: any): void {
     this.remove$.next(card);
   }
 
-  public add(card: any) {
+  public add(card: any): void {
     this.add$.next(card);
+  }
+
+  public addSide(card: any): void {
+    this.addSide$.next(card);
+  }
+
+  public removeSide(card: any): void {
+    this.removeSide$.next(card);
+  }
+
+  public fromDeckToSide(card: any, repeat: number): void {
+    for (let i = 1; i <= repeat + 1; i++) {
+      this.remove$.next(card);
+      this.addSide$.next(card);
+    }
+  }
+
+  public fromSideToDeck(card: any, repeat: number): void {
+    for (let i = 1; i <= repeat + 1; i++) {
+      this.removeSide$.next(card);
+      this.add$.next(card);
+    }
   }
 
   public editSettings() {
@@ -229,13 +275,18 @@ export class EditComponent {
   }
 
   public submit() {
-    combineLatest({ deck: this.deck$, cards: this.deckCards$ })
+    combineLatest({
+      deck: this.deck$,
+      cards: this.deckCards$,
+      side: this.deckSide$,
+    })
       .pipe(
         take(1),
-        switchMap(({ deck, cards }) =>
+        switchMap(({ deck, cards, side }) =>
           this.decksService.update(
             deck.id,
-            cards.map((card) => card.id)
+            cards.map((card) => card.id),
+            side.map((card) => card.id)
           )
         )
       )

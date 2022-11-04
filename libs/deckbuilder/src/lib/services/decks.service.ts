@@ -61,7 +61,7 @@ export class DecksService {
     return this.http.post(`decks/${id}/deity`, { deityId });
   }
 
-  public update(id: string, cards: any) {
-    return this.http.post(`decks/${id}`, cards);
+  public update(id: string, cards: any, side: any) {
+    return this.http.post(`decks/${id}`, { cards, side });
   }
 }
