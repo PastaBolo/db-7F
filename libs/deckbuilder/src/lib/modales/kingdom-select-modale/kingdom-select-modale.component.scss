@@ -15,11 +15,11 @@
   .kingdom-logo {
     width: 3rem;
     cursor: pointer;
-    filter: drop-shadow(0px 5px 5px #000);
+    filter: drop-shadow(0px 5px 5px #333);
     transition: 200ms ease-in-out;
     
     &:hover {
-      filter: drop-shadow(0px 10px 5px #000);
+      filter: drop-shadow(0px 10px 5px #333);
     }
   }
 }

@@ -132,6 +132,10 @@ a {
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 // Override material
 [mat-icon-button] {
   background-color: #424242;

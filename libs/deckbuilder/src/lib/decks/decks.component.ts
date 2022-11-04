@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { listFade } from '@seven-fallen/ui';
 import { CardsService, DecksService } from '../services';
@@ -25,13 +25,12 @@ export class DecksComponent implements OnDestroy {
       )
     );
 
-  public readonly decks$ = this.filters
-    .get('deityId')
-    ?.valueChanges.pipe(
-      switchMap((deityId) =>
-        deityId ? this.decksService.search({ deityId }) : of([])
-      )
-    );
+  public readonly decks$ = this.filters.get('deityId')?.valueChanges.pipe(
+    filter((deityId) => !!deityId),
+    switchMap((deityId) =>
+      deityId ? this.decksService.search({ deityId }) : of([])
+    )
+  );
 
   private readonly destroy$ = new Subject<void>();
 

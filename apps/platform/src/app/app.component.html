@@ -1,20 +1,20 @@
 <nav>
-  <a *isNotLoggedIn class="material-icons" routerLink="auth">login</a>
-  <span routerLink="." class="material-icons" (click)="drawer.close()">home</span>
-  <span *isLoggedIn class="material-icons" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
-  <span class="material-icons" (click)="drawer.close()">menu_book</span>
-  <span class="material-icons" (click)="drawer.close()">search</span>
-  <a routerLink="lexique" class="material-icons" (click)="drawer.close()">summarize</a>
-  <span *isLoggedIn class="material-icons" (click)="drawer.close()">group</span>
-  <span *isLoggedIn class="material-icons" (click)="drawer.close()">person_search</span>
-  <span *isLoggedIn class="material-icons" (click)="openSettings(settingsTmpl)" style="margin-top: auto">settings</span>
+  <a *isNotLoggedIn class="material-icons pointer" routerLink="auth">login</a>
+  <span routerLink="." class="material-icons pointer" (click)="drawer.close()">home</span>
+  <span *isLoggedIn class="material-icons pointer" style="transform: rotate(180deg)" (click)="drawer.toggle()">style</span>
+  <!-- <span class="material-icons pointer" (click)="drawer.close()">menu_book</span> -->
+  <!-- <span class="material-icons pointer" (click)="drawer.close()">search</span> -->
+  <a routerLink="lexique" class="material-icons pointer" (click)="drawer.close()">summarize</a>
+  <!-- <span *isLoggedIn class="material-icons pointer" (click)="drawer.close()">group</span> -->
+  <!-- <span *isLoggedIn class="material-icons pointer" (click)="drawer.close()">person_search</span> -->
+  <span *isLoggedIn class="material-icons pointer" (click)="openSettings(settingsTmpl)" style="margin-top: auto">settings</span>
 </nav>
 <mat-drawer-container autosize hasBackdrop>
   <mat-drawer #drawer mode="over">
     <div *isLoggedIn class="mat-drawer-content">
-      <div (click)="drawer.close(); createNewDeck()">Créer un deck</div>
-      <div><a [routerLink]="['users', (currentUser$ | async)?.uid]" (click)="drawer.close()">Voir mes decks</a></div>
-      <div><a routerLink="decks" (click)="drawer.close()">Rechercher un deck</a></div>
+      <div (click)="drawer.close(); createNewDeck()" class="pointer">Créer un deck</div>
+      <div><a [routerLink]="['users', (currentUser$ | async)?.uid]" (click)="drawer.close()" class="pointer">Voir mes decks</a></div>
+      <div><a routerLink="decks" (click)="drawer.close()" class="pointer">Rechercher un deck</a></div>
     </div>
   </mat-drawer>
   <mat-drawer-content>
