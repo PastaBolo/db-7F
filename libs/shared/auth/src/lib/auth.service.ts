@@ -18,12 +18,7 @@ export class AuthService {
     private readonly afAuth: AngularFireAuth,
     @Inject(LOCAL_STORAGE) private readonly localStorage: Storage
   ) {
-    this.afAuth.onAuthStateChanged((user) => {
-      user?.getIdToken().then((token) => {
-        this.refreshStoredToken(token);
-        this._isLoggedIn$.next(!!user);
-      });
-    });
+    this.refresh();
   }
 
   public googleSignIn() {
@@ -48,6 +43,15 @@ export class AuthService {
 
   public getAuthToken(): string | null {
     return this.localStorage.getItem('token');
+  }
+
+  public refresh() {
+    this.afAuth.onAuthStateChanged((user) => {
+      user?.getIdToken().then((token) => {
+        this.refreshStoredToken(token);
+        this._isLoggedIn$.next(!!user);
+      });
+    });
   }
 
   private signIn() {
