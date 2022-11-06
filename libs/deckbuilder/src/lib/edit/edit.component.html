@@ -32,7 +32,9 @@
           <span class="material-symbols-outlined">edit</span>
         </button>
       </div>
-      <seven-fallen-charts [cards]="(deckCards$ | async)!"></seven-fallen-charts>
+      <ng-container *ngIf="deckCards$ | async as deckCards">
+        <seven-fallen-charts *ngIf="deckCards.length" [cards]="deckCards"></seven-fallen-charts>
+      </ng-container>
     </div>
 
     <div class="deck-container">
