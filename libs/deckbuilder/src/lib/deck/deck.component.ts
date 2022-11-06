@@ -26,6 +26,15 @@ export class DeckComponent {
     )
   );
 
+  public readonly deckSide$ = this.data$.pipe(
+    map(
+      (data) =>
+        data.deck.side?.map((id: string) =>
+          data.cardsInfo.find((card: any) => card.id === id)
+        ) ?? []
+    )
+  );
+
   public readonly types = [
     { type: 'Temple', label: 'Temple' },
     { type: 'CadeauDivin', label: 'Cadeau Divin' },

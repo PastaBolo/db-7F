@@ -32,6 +32,13 @@
       <ng-container *ngFor="let type of types">
         <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: cards$ | async, type: type }"></ng-container>
       </ng-container>
+      <ng-container *ngIf="(deckSide$ | async)!.length">
+        <hr class="side-divider">
+        <div class="text-2xl text-semibold">Side</div>
+        <ng-container *ngFor="let type of types">
+          <ng-container *ngTemplateOutlet="typeTmpl; context: { $implicit: deckSide$ | async, type: type, isSide: true }"></ng-container>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
