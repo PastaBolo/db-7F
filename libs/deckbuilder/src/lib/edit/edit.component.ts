@@ -238,12 +238,7 @@ export class EditComponent {
         )
       )
       .subscribe(() => {
-        this.snackbar.open(
-          'Les détails du deck ont bien été mis à jour',
-          'Ok',
-          { duration: 5000 }
-        );
-        this.refresh$.next();
+        this.submit();
       });
   }
 
@@ -267,10 +262,7 @@ export class EditComponent {
         )
       )
       .subscribe(() => {
-        this.snackbar.open('La divinité a bien été modifiée', 'Ok', {
-          duration: 5000,
-        });
-        this.refresh$.next();
+        this.submit();
       });
   }
 
@@ -292,6 +284,7 @@ export class EditComponent {
       )
       .subscribe(() => {
         this.snackbar.open('Deck mis à jour', 'Ok', { duration: 5000 });
+        this.refresh$.next();
       });
   }
 
