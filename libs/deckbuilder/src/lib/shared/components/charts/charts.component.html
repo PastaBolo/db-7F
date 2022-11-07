@@ -1,15 +1,36 @@
 <div cdkAccordionItem #cardListAccordion="cdkAccordionItem" expanded>
-  <div (click)="cardListAccordion.toggle()" class="livre-sacre-title" [class.expanded]="cardListAccordion.expanded">
+  <div (click)="cardListAccordion.toggle()" class="details-title" [class.expanded]="cardListAccordion.expanded">
     <span>Livre sacré : {{ cards | map: totalLivreSacre }}</span>
     <span class="material-symbols-outlined expand-button">expand_more</span>
   </div>
-  <div *ngIf="cardListAccordion.expanded" class="livre-sacre-details" @expand>
-    <div *ngFor="let type of typesLivreSacre" class="type">
+  <div *ngIf="cardListAccordion.expanded" class="content-details" @expand>
+    <div *ngFor="let type of typesLivreSacre" class="detail">
       <span>{{ type.label }}</span>
       <span>{{ (cards | map: byType: type.id).length }}</span>
     </div>
   </div>
 </div>
+<div cdkAccordionItem #ecAccordion="cdkAccordionItem" expanded>
+  <div (click)="ecAccordion.toggle()" class="details-title" [class.expanded]="ecAccordion.expanded">
+    <span>EC générés : {{ (cards | map: ecDetails).total }}</span>
+    <span class="material-symbols-outlined expand-button">expand_more</span>
+  </div>
+  <div *ngIf="ecAccordion.expanded" class="content-details" @expand>
+    <div class="detail">
+      <span>Adorateurs</span>
+      <span>{{ (cards | map: ecDetails).adorateurs }}</span>
+    </div>
+    <div class="detail">
+      <span>Archange</span>
+      <span>{{ (cards | map: ecDetails).archange }}</span>
+    </div>
+    <div class="detail"><span>Temple</span>
+      <span>{{ (cards | map: ecDetails).temple }}</span>
+    </div>
+  </div>
+</div>
+<div>Coût total : {{ cards | map: deckCost }}</div>
+<div>Coût révocation : {{ cards | map: revocationCost }}</div>
 <div class="chart">
   <div class="chart-title">Coût moyen</div>
   <canvas barChart [data]="cards | map: averageCosts"></canvas>

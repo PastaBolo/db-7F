@@ -46,6 +46,39 @@ export class ChartsComponent {
     { id: 'Miracle', label: 'Miracles' },
   ];
 
+  public readonly ecDetails = (cards: Cards) => ({
+    total: cards
+      .filter(
+        (card) =>
+          ['Adorateur', 'Archange', 'Temple'].includes(card.type) &&
+          _isNumberValue(card.ec)
+      )
+      .reduce((total, card) => total + card.ec, 0),
+    adorateurs: cards
+      .filter((card) => card.type === 'Adorateur' && _isNumberValue(card.ec))
+      .reduce((total, card) => total + card.ec, 0),
+    archange: cards
+      .filter((card) => card.type === 'Archange' && _isNumberValue(card.ec))
+      .reduce((total, card) => total + card.ec, 0),
+    temple: cards
+      .filter((card) => card.type === 'Temple' && _isNumberValue(card.ec))
+      .reduce((total, card) => total + card.ec, 0),
+  });
+
+  public readonly deckCost = (cards: Cards) =>
+    cards
+      .filter(
+        (card) =>
+          ['Ange', 'Golem', 'Benediction', 'Equipement'].includes(card.type) &&
+          _isNumberValue(card.ec)
+      )
+      .reduce((total, card) => total + card.ec, 0);
+
+  public readonly revocationCost = (cards: Cards) =>
+    cards
+      .filter((card) => _isNumberValue(card.revoquer))
+      .reduce((total, card) => total + card.revoquer, 0);
+
   public readonly averageCosts = (cards: Cards): ChartData => ({
     labels: ['Anges', 'Golems', 'Bénédictions', 'Equipements'],
     datasets: [
