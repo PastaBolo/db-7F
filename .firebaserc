@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "seven-platform-d50b6": {
+      "hosting": {
+        "platform": [
+          "db-7fallen"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "seven-platform-d50b6"
+  }
+}

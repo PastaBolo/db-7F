@@ -37,7 +37,7 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "1.5mb"
             },
             {
               "type": "anyComponentStyle",
@@ -63,6 +63,16 @@
         }
       },
       "defaultConfiguration": "production"
+    },
+    "deploy": {
+      "builder": "@angular/fire:deploy",
+      "options": {
+        "prerender": false,
+        "ssr": false,
+        "browserTarget": "platform:build:production",
+        "firebaseProject": "seven-platform-d50b6",
+        "firebaseHostingSite": "db-7fallen"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
