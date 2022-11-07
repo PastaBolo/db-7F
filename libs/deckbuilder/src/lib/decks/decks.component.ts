@@ -25,12 +25,13 @@ export class DecksComponent implements OnDestroy {
       )
     );
 
-  public readonly decks$ = this.filters.get('deityId')?.valueChanges.pipe(
-    filter((deityId) => !!deityId),
-    switchMap((deityId) =>
-      deityId ? this.decksService.search({ deityId }) : of([])
-    )
-  );
+  public readonly decks$ = this.filters
+    .get('deityId')
+    ?.valueChanges.pipe(
+      switchMap((deityId) =>
+        deityId ? this.decksService.search({ deityId }) : of([])
+      )
+    );
 
   private readonly destroy$ = new Subject<void>();
 

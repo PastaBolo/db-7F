@@ -15,5 +15,7 @@
       <div class="text-sm">{{ deck.user.name }}</div>
     </a>
   </div>
-  <div *ngIf="!decks.length" style="margin-top: 2rem;">Aucun deck à afficher</div>
+  <ng-container *ngIf="filters.get('deityId')?.valueChanges | async">
+    <div *ngIf="!decks.length" style="margin-top: 2rem;">Aucun deck à afficher</div>
+  </ng-container>
 </ng-container>
