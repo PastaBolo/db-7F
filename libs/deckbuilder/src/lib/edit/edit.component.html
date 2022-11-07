@@ -1,6 +1,9 @@
 <ng-container *ngIf="deck$ | async as deck">
   <div class="header">
-    <div class="text-2xl name">{{ deck.name }}</div>
+    <div class="name flex align-center">
+      <span class="text-2xl">{{ deck.name }}</span>
+      <span *ngIf="deck.private" class="material-symbols-outlined lock">lock</span>
+    </div>
     <div class="options">
       <button mat-icon-button (click)="editSettings()">
         <span class="material-symbols-outlined">edit</span>

@@ -1,6 +1,9 @@
 <ng-container *ngIf="data$ | async as data">
   <div class="header">
-    <div class="text-2xl name">{{ data.deck.name }}</div>
+    <div class="name flex align-center">
+      <span class="text-2xl">{{ data.deck.name }}</span>
+      <span *ngIf="data.deck.private" class="material-symbols-outlined lock">lock</span>
+    </div>
     <div class="options">
       <a [routerLink]="['../edit', data.deck.id]">
         <button *isCurrentUserId="data.creator.uid" mat-icon-button>

@@ -12,7 +12,12 @@
   margin-bottom: 2rem;
 
   .name {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
+
+    .lock {
+      margin-left: 0.5rem;
+      color: #000;
+    }
   }
 
   .options {
