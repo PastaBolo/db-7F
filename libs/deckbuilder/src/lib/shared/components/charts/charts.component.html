@@ -10,5 +10,11 @@
     </div>
   </div>
 </div>
-<canvas barChart [data]="cards | map: averageCosts"></canvas>
-<canvas barChart [data]="cards | map: detailedCosts"></canvas>
+<div class="chart">
+  <div class="chart-title">Coût moyen</div>
+  <canvas barChart [data]="cards | map: averageCosts"></canvas>
+</div>
+<div class="chart">
+  <div class="chart-title">Nombre par coût</div>
+  <canvas barChart [data]="cards | map: detailedCosts"></canvas>
+</div>
