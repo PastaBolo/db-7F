@@ -45,7 +45,7 @@ export class DeckComponent {
 
   public readonly types = [
     { type: 'Temple', label: 'Temple' },
-    { type: 'CadeauDivin', label: 'Cadeau Divin' },
+    { type: 'Cadeau Divin', label: 'Cadeau Divin' },
     { type: 'Archange', label: 'Archange' },
     { type: 'Adorateur', label: 'Adorateurs' },
     { type: 'Ange', label: 'Anges' },
@@ -65,7 +65,7 @@ export class DeckComponent {
     [7, 'Equipement'],
     [8, 'Benediction'],
     [9, 'Miracle'],
-    [10, 'CadeauDivin'],
+    [10, 'Cadeau Divin'],
     [11, 'Familier'],
   ]);
 

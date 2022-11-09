@@ -21,7 +21,7 @@ export const exportFormat = (sanitizer: DomSanitizer) =>
           { type: 'Equipement', label: 'Equipements' },
           { type: 'Benediction', label: 'Bénédictions' },
           { type: 'Miracle', label: 'Miracles' },
-          { type: 'CadeauDivin', label: 'Cadeau Divin' },
+          { type: 'Cadeau Divin', label: 'Cadeau Divin' },
           { type: 'Familier', label: 'Familiers' },
         ]
           .map(({ type, label }) => ({
