@@ -21,7 +21,7 @@ export const createNestServer = async (expressInstance) => {
     AppModule,
     new ExpressAdapter(expressInstance)
   );
-  const globalPrefix = '';
+  const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.enableCors();
   return app.init();
@@ -42,4 +42,11 @@ createNestServer(server)
   })
   .catch((err) => Logger.error('Nest broken', err));
 
-http('api', server);
+http('helloapi', server);
+
+// http('api', (req, res) => {
+//   // Your code here
+
+//   // Send an HTTP response
+//   res.send('OK');
+// });

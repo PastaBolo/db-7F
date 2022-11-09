@@ -93,19 +93,6 @@ export class ChartsComponent {
                 0
               ),
           })),
-          {
-            x: 4,
-            y: cards
-              .filter(
-                (card) =>
-                  card.type === 'Miracle' && _isNumberValue(card.revoquer)
-              )
-              .reduce(
-                (average, card, _, cards) =>
-                  average + card.revoquer / cards.length,
-                0
-              ),
-          },
         ],
         backgroundColor: ['rgba(0, 0, 0, 0.3)'],
       },

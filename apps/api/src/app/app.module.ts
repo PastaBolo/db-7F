@@ -9,9 +9,9 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    AuthModule,
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     Neo4jModule.forRootAsync(),
+    AuthModule,
     CardsModule,
     DecksModule,
     UsersModule,

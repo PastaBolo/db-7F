@@ -6,6 +6,7 @@
     "admin-api": "apps/admin-api",
     "api": "apps/api",
     "auth": "libs/auth",
+    "back": "apps/back",
     "deckbuilder": "libs/deckbuilder",
     "home": "libs/home",
     "lexique": "libs/lexique",

@@ -24,6 +24,6 @@ export const createDriver = async (config: Neo4jConfig) => {
     neo4j.auth.basic(username, password),
     { disableLosslessIntegers: !!disableLosslessIntegers }
   );
-  await driver.verifyConnectivity();
+  // await driver.verifyConnectivity();
   return driver;
 };

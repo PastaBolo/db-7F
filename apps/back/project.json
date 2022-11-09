@@ -1,0 +1,79 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/back/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/back",
+        "main": "apps/back/src/main.ts",
+        "tsConfig": "apps/back/tsconfig.app.json",
+        "assets": [
+          "apps/back/src/assets"
+        ],
+        "outputFileName": "index.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/back/src/environments/environment.ts",
+              "with": "apps/back/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "gcloud functions deploy test-api --region europe-west1 --runtime nodejs16 --trigger-http --entry-point helloapi --source ./dist/apps/back --allow-unauthenticated --project seven-platform-363908"
+        ],
+        "color": true,
+        "parallel": false
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "back:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "back:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/back/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/back"
+      ],
+      "options": {
+        "jestConfig": "apps/back/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

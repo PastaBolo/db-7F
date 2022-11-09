@@ -11,6 +11,9 @@
       <button mat-icon-button (click)="submit()">
         <span class="material-symbols-outlined">save</span>
       </button>
+      <a mat-icon-button [href]="exportFile$ | async" [download]="deck.name + '.txt'">
+        <span class="material-symbols-outlined">file_download</span>
+      </a>
       <button mat-icon-button matTooltip="Prévisualisation" cdkAccordionItem #previewAccordion="cdkAccordionItem" expanded (click)="previewAccordion.toggle()" [class.selected]="previewAccordion.expanded" [class.hidden]="!listLayoutAccordion.expanded" style="margin-left: auto;">
         <span class="material-symbols-outlined">preview</span>
       </button>

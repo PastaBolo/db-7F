@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -25,6 +26,7 @@ import {
   DeckSettingsModaleComponent,
   SelectDeityModaleComponent,
 } from '../modales';
+import { byType, exportFormat, getQuantity, groupCards } from '../shared';
 
 @Component({
   selector: 'seven-fallen-edit',
@@ -137,6 +139,12 @@ export class EditComponent {
     switchMap((filters) => this.cardsService.search(filters))
   );
 
+  public readonly exportFile$ = combineLatest({
+    deck: this.deck$,
+    cards: this.deckCards$,
+    side: this.deckSide$,
+  }).pipe(exportFormat(this.sanitizer));
+
   public readonly types = [
     { type: 'Temple', label: 'Temple' },
     { type: 'CadeauDivin', label: 'Cadeau Divin' },
@@ -163,25 +171,13 @@ export class EditComponent {
     [11, 'Familier'],
   ]);
 
-  public readonly byType = (cards: any[], type: string) =>
-    cards.filter((card) => card.type === type);
-
-  public readonly getQuantity = (card: any, cards: any[]) =>
-    cards.filter(({ id }) => id === card.id).length;
-
-  public readonly groupCards = (cards: any[]) =>
-    cards.reduce((groups: { card: any; qty: number }[], card) => {
-      const group = groups.find((group) => group.card.id === card.id);
-      if (group) {
-        group.qty++;
-        return groups;
-      } else {
-        return [...groups, { card, qty: 1 }];
-      }
-    }, []);
+  public readonly byType = byType;
+  public readonly getQuantity = getQuantity;
+  public readonly groupCards = groupCards;
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly sanitizer: DomSanitizer,
     private readonly dialog: MatDialog,
     private readonly snackbar: MatSnackBar,
     private readonly decksService: DecksService,

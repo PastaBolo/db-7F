@@ -1,10 +1,12 @@
 import { Component, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { map, shareReplay, switchMap } from 'rxjs';
+import { combineLatest, map, shareReplay, switchMap } from 'rxjs';
 
 import { expand, fade } from '@seven-fallen/ui';
-import { DecksService } from '../services/decks.service';
+import { DecksService } from '../services';
+import { byType, exportFormat, getQuantity, groupCards } from '../shared';
 
 @Component({
   selector: 'seven-fallen-deck',
@@ -35,6 +37,12 @@ export class DeckComponent {
     )
   );
 
+  public readonly exportFile$ = combineLatest({
+    deck: this.data$.pipe(map((data) => data.deck)),
+    cards: this.cards$,
+    side: this.deckSide$,
+  }).pipe(exportFormat(this.sanitizer));
+
   public readonly types = [
     { type: 'Temple', label: 'Temple' },
     { type: 'CadeauDivin', label: 'Cadeau Divin' },
@@ -61,25 +69,13 @@ export class DeckComponent {
     [11, 'Familier'],
   ]);
 
-  public readonly byType = (cards: any[], type: string) =>
-    cards.filter((card) => card.type === type);
-
-  public readonly getQuantity = (card: any, cards: any[]) =>
-    cards.filter(({ id }) => id === card.id).length;
-
-  public readonly groupCards = (cards: any[]) =>
-    cards.reduce((groups: { card: any; qty: number }[], card) => {
-      const group = groups.find((group) => group.card.id === card.id);
-      if (group) {
-        group.qty++;
-        return groups;
-      } else {
-        return [...groups, { card, qty: 1 }];
-      }
-    }, []);
+  public readonly byType = byType;
+  public readonly getQuantity = getQuantity;
+  public readonly groupCards = groupCards;
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly sanitizer: DomSanitizer,
     private readonly dialog: MatDialog,
     private readonly decksService: DecksService
   ) {}

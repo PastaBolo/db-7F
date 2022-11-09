@@ -8,10 +8,11 @@ export class UsersService {
   public async get(uid: string) {
     return await this.neo4jService.read(
       `
-        MATCH (u:User {uid: $uid})-[:HAS_BUILT]->(d:Deck)--(de:Card:Divinite)--(kingdom:Kingdom)
+        MATCH (u:User {uid: $uid})
+        OPTIONAL MATCH (u)-[:HAS_BUILT]->(d:Deck)--(de:Card:Divinite)--(kingdom:Kingdom)
         OPTIONAL MATCH (de)--(i:CardInstance)
-        WITH d{.*, private: apoc.label.exists(d, "Private"), deity: {id: de.id, name: de.name, kingdom: properties(kingdom), images: collect(i.imgSrc)}} as deck, u
-        RETURN u{.*, decks: collect(properties(apoc.map.removeKey(deck, 'cards')))}
+        WITH d{id: d.id, name: d.name, private: apoc.label.exists(d, "Private"), deity: {id: de.id, name: de.name, kingdom: properties(kingdom), images: collect(i.imgSrc)}} as deck, u
+        RETURN u{.*, decks: collect(properties(deck))}
       `,
       { uid }
     );

@@ -62,7 +62,7 @@ export class BarChartDirective implements OnDestroy {
     this.chart = new Chart(this.elmt.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['Anges', 'Golems', 'Bénédictions', 'Equipements', 'Miracles'],
+        labels: ['Anges', 'Golems', 'Bénédictions', 'Equipements'],
         datasets: [{ data: [] }],
       },
       options: {

@@ -10,6 +10,9 @@
           <span class="material-icons">edit</span>
         </button>
       </a>
+      <a mat-icon-button [href]="exportFile$ | async" [download]="data.deck.name + '.txt'">
+        <span class="material-symbols-outlined">file_download</span>
+      </a>
       <button mat-icon-button matTooltip="Prévisualisation" cdkAccordionItem #previewAccordion="cdkAccordionItem" expanded (click)="previewAccordion.toggle()" [class.selected]="previewAccordion.expanded" [class.hidden]="!listLayoutAccordion.expanded" style="margin-left: auto;">
         <span class="material-symbols-outlined">preview</span>
       </button>
