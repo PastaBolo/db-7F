@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
+  BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
   EMPTY,
@@ -35,7 +36,9 @@ import { byType, exportFormat, getQuantity, groupCards } from '../shared';
   animations: [expand, fade],
 })
 export class EditComponent {
-  public refresh$ = new Subject<void>();
+  public readonly refresh$ = new Subject<void>();
+
+  public readonly isEditing$ = new BehaviorSubject(false);
 
   public readonly data$ = this.refresh$.pipe(
     startWith(null),
@@ -186,24 +189,29 @@ export class EditComponent {
 
   public remove(card: any): void {
     this.remove$.next(card);
+    this.isEditing$.next(true);
   }
 
   public add(card: any): void {
     this.add$.next(card);
+    this.isEditing$.next(true);
   }
 
   public addSide(card: any): void {
     this.addSide$.next(card);
+    this.isEditing$.next(true);
   }
 
   public removeSide(card: any): void {
     this.removeSide$.next(card);
+    this.isEditing$.next(true);
   }
 
   public fromDeckToSide(card: any, repeat: number): void {
     for (let i = 1; i <= repeat + 1; i++) {
       this.remove$.next(card);
       this.addSide$.next(card);
+      this.isEditing$.next(true);
     }
   }
 
@@ -211,6 +219,7 @@ export class EditComponent {
     for (let i = 1; i <= repeat + 1; i++) {
       this.removeSide$.next(card);
       this.add$.next(card);
+      this.isEditing$.next(true);
     }
   }
 
@@ -281,6 +290,7 @@ export class EditComponent {
       .subscribe(() => {
         this.snackbar.open('Deck mis à jour', 'Ok', { duration: 5000 });
         this.refresh$.next();
+        this.isEditing$.next(false);
       });
   }
 

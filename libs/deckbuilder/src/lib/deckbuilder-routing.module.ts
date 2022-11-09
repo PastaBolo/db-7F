@@ -5,6 +5,7 @@ import { MainComponent } from './main/main.component';
 import { DeckComponent } from './deck/deck.component';
 import { EditComponent } from './edit/edit.component';
 import { DecksComponent } from './decks/decks.component';
+import { IsEditingGuard } from './guards/is-editing.guard';
 
 const routes: Routes = [
   {
@@ -13,8 +14,11 @@ const routes: Routes = [
     children: [
       { path: '', component: DecksComponent },
       { path: ':id', component: DeckComponent },
-      { path: 'edit/:id', component: EditComponent },
-      // { path: 'decks/:id', component: EditComponent },
+      {
+        path: 'edit/:id',
+        component: EditComponent,
+        canDeactivate: [IsEditingGuard],
+      },
     ],
   },
 ];
