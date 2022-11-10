@@ -9,11 +9,12 @@ export class DecksService {
     return await this.neo4jService.read(
       `
         MATCH (user:User)--(deck:Deck {id: $id})--(de:Card:Divinite)--(kingdom:Kingdom)
-        OPTIONAL MATCH (c:Card) WHERE (c.id IN properties(deck).cards) OR (c.id IN properties(deck).side)
+        OPTIONAL MATCH (c:Card)--(i:CardInstance) WHERE (c.id IN properties(deck).cards) OR (c.id IN properties(deck).side)
+        WITH c{.*, images: collect(i.imgSrc)} as card, deck, de, kingdom, user
+        WITH collect(card) as cards, deck, de, kingdom, user
         OPTIONAL MATCH (de)--(iDeity:CardInstance)
-        OPTIONAL MATCH (c:Card)--(i:CardInstance) 
-        WITH (c{.*, images: collect(i.imgSrc)}) as card, deck, de{.*, images: collect(iDeity.imgSrc)} as deity, kingdom, user
-        RETURN { deck: deck{.*, private:  apoc.label.exists(deck, "Private"), deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: collect(card), creator: properties(user) }
+        WITH deck, de{.*, images: collect(iDeity.imgSrc)} as deity, cards, kingdom, user
+        RETURN { deck: deck{.*, private:  apoc.label.exists(deck, "Private"), deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: cards, creator: properties(user) }
         `,
       { id }
     );
