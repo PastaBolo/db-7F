@@ -13,7 +13,7 @@ export class DecksService {
         WITH c{.*, images: collect(i.imgSrc)} as card, deck, de, kingdom, user
         WITH collect(card) as cards, deck, de, kingdom, user
         OPTIONAL MATCH (de)--(iDeity:CardInstance)
-        WITH deck, de{.*, images: collect(iDeity.imgSrc)} as deity, cards, kingdom, user
+        WITH de{.*, images: collect(iDeity.imgSrc)} as deity, deck, cards, kingdom, user
         RETURN { deck: deck{.*, private:  apoc.label.exists(deck, "Private"), deity: deity{.*, kingdomId: kingdom.id}}, cardsInfo: cards, creator: properties(user) }
         `,
       { id }
@@ -85,6 +85,17 @@ export class DecksService {
         RETURN d
       `,
       { uid, id, deityId }
+    );
+    return {};
+  }
+
+  public async delete(id: string, uid: string) {
+    await this.neo4jService.write(
+      `
+        OPTIONAL MATCH (:User {uid: $uid})-[:HAS_BUILT]->(d:Deck {id: $id})
+        DETACH DELETE d
+      `,
+      { uid, id }
     );
     return {};
   }

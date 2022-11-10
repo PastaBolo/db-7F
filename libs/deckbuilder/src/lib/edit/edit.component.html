@@ -5,15 +5,18 @@
       <span *ngIf="deck.private" class="material-symbols-outlined lock">lock</span>
     </div>
     <div class="options">
-      <button mat-icon-button (click)="editSettings()">
+      <button mat-icon-button (click)="editSettings()" matTooltip="Editer">
         <span class="material-symbols-outlined">edit</span>
       </button>
-      <button mat-icon-button (click)="submit()">
+      <button mat-icon-button (click)="submit()" matTooltip="Sauvegarder">
         <span class="material-symbols-outlined">save</span>
       </button>
       <a mat-icon-button [href]="exportFile$ | async" [download]="deck.name + '.txt'" matTooltip="Exporter">
         <span class="material-symbols-outlined">file_download</span>
       </a>
+      <button mat-icon-button (click)="delete()" matTooltip="Supprimer">
+        <span class="material-symbols-outlined">delete</span>
+      </button>
       <button mat-icon-button matTooltip="Prévisualisation" cdkAccordionItem #previewAccordion="cdkAccordionItem" expanded (click)="previewAccordion.toggle()" [class.selected]="previewAccordion.expanded" [class.hidden]="!listLayoutAccordion.expanded" style="margin-left: auto;">
         <span class="material-symbols-outlined">preview</span>
       </button>

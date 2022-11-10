@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DecksService } from '@seven-fallen/deckbuilder';
 import { AuthService } from '@seven-fallen/shared/auth';
 import { UsersService } from '@seven-fallen/shared/services';
+import { MaintenanceModaleComponent } from './maintenance-modale.component';
 
 @Component({
   selector: 'seven-fallen-root',
@@ -18,7 +19,9 @@ export class AppComponent {
     private readonly authService: AuthService,
     private readonly decksService: DecksService,
     private readonly usersService: UsersService
-  ) {}
+  ) {
+    // dialog.open(MaintenanceModaleComponent, { disableClose: true });
+  }
 
   public createNewDeck(): void {
     this.decksService.createNewDeck();

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
@@ -20,6 +21,7 @@ import { ChartsModule } from '../shared';
     CommonModule,
     RouterModule,
     MatButtonModule,
+    MatTooltipModule,
     MatDialogModule,
     CdkAccordionModule,
     PermissionsModule,

@@ -2,7 +2,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
@@ -28,6 +28,7 @@ import {
   SelectDeityModaleComponent,
 } from '../modales';
 import { byType, exportFormat, getQuantity, groupCards } from '../shared';
+import { DeleteConfirmModaleComponent } from './delete-confirm-modale/delete-confirm-modale.component';
 
 @Component({
   selector: 'seven-fallen-edit',
@@ -180,6 +181,7 @@ export class EditComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly dialog: MatDialog,
     private readonly snackbar: MatSnackBar,
@@ -299,5 +301,27 @@ export class EditComponent {
     tmpl: TemplateRef<{ $implicit: any }>
   ): void {
     this.dialog.open(tmpl, { data: card, panelClass: 'full-screen-card' });
+  }
+
+  public delete(): void {
+    this.deck$
+      .pipe(
+        take(1),
+        switchMap((deck) =>
+          this.dialog
+            .open(DeleteConfirmModaleComponent)
+            .afterClosed()
+            .pipe(
+              switchMap((confirm?: boolean) =>
+                confirm ? this.decksService.delete(deck.id) : EMPTY
+              )
+            )
+        )
+      )
+      .subscribe(() => {
+        this.snackbar.open('Deck supprimé', 'Ok', { duration: 5000 });
+        this.isEditing$.next(false);
+        this.router.navigate(['.']);
+      });
   }
 }

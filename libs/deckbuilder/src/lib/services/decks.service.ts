@@ -64,4 +64,8 @@ export class DecksService {
   public update(id: string, cards: any, side: any) {
     return this.http.post(`decks/${id}`, { cards, side });
   }
+
+  public delete(id: string): any {
+    return this.http.delete(`decks/${id}`);
+  }
 }

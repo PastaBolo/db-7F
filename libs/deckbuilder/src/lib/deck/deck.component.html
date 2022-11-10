@@ -6,7 +6,7 @@
     </div>
     <div class="options">
       <a [routerLink]="['../edit', data.deck.id]">
-        <button *isCurrentUserId="data.creator.uid" mat-icon-button>
+        <button *isCurrentUserId="data.creator.uid" mat-icon-button matTooltip="Editer">
           <span class="material-icons">edit</span>
         </button>
       </a>

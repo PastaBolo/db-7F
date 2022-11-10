@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -68,5 +69,11 @@ export class DecksController {
     @Body() { deityId }: { deityId: string }
   ) {
     return this.decksService.updateDeity(uid, id, deityId);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard('firebase'))
+  public delete(@UserId() uid: string, @Param('id') id: string) {
+    return this.decksService.delete(id, uid);
   }
 }

@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 import {
@@ -14,16 +15,17 @@ import {
   PreviewOverModule,
   RepeatModule,
 } from '@seven-fallen/ui';
-import { EditComponent } from './edit.component';
 import {
   CardTypeSelectModule,
   ChartsModule,
   KingdomSelectModule,
 } from '../shared';
 import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
+import { EditComponent } from './edit.component';
+import { DeleteConfirmModaleComponent } from './delete-confirm-modale/delete-confirm-modale.component';
 
 @NgModule({
-  declarations: [EditComponent],
+  declarations: [EditComponent, DeleteConfirmModaleComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,6 +34,7 @@ import { DeckSettingsModaleModule, SelectDeityModaleModule } from '../modales';
     MatSelectModule,
     MatTooltipModule,
     MatMenuModule,
+    MatDialogModule,
     CdkAccordionModule,
     LetModule,
     MapperModule,

@@ -15,9 +15,10 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiUrlInterceptor } from './core';
+import { MaintenanceModaleComponent } from './maintenance-modale.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MaintenanceModaleComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
