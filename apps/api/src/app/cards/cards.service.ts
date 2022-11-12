@@ -11,7 +11,7 @@ const cardTypes = new Map([
   [7, 'Equipement'],
   [8, 'Benediction'],
   [9, 'Miracle'],
-  [10, 'Cadeau Divin'],
+  [10, 'CadeauDivin'],
   [11, 'Familier'],
 ]);
 
