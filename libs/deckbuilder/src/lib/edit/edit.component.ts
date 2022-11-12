@@ -303,25 +303,10 @@ export class EditComponent {
     this.dialog.open(tmpl, { data: card, panelClass: 'full-screen-card' });
   }
 
-  public delete(): void {
-    this.deck$
-      .pipe(
-        take(1),
-        switchMap((deck) =>
-          this.dialog
-            .open(DeleteConfirmModaleComponent)
-            .afterClosed()
-            .pipe(
-              switchMap((confirm?: boolean) =>
-                confirm ? this.decksService.delete(deck.id) : EMPTY
-              )
-            )
-        )
-      )
-      .subscribe(() => {
-        this.snackbar.open('Deck supprimé', 'Ok', { duration: 5000 });
-        this.isEditing$.next(false);
-        this.router.navigate(['.']);
-      });
+  public delete(id: string): void {
+    this.decksService.delete(id).subscribe(() => {
+      this.isEditing$.next(false);
+      this.router.navigate(['.']);
+    });
   }
 }

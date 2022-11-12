@@ -1,5 +1,5 @@
 import { Component, TemplateRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { combineLatest, map, shareReplay, switchMap } from 'rxjs';
@@ -75,6 +75,7 @@ export class DeckComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly dialog: MatDialog,
     private readonly decksService: DecksService
@@ -85,5 +86,11 @@ export class DeckComponent {
     tmpl: TemplateRef<{ $implicit: any }>
   ): void {
     this.dialog.open(tmpl, { data: card, panelClass: 'full-screen-card' });
+  }
+
+  public delete(id: string): void {
+    this.decksService.delete(id).subscribe(() => {
+      this.router.navigate(['.']);
+    });
   }
 }

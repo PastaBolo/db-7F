@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { switchMap, of, EMPTY } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap, EMPTY, tap } from 'rxjs';
 
 import {
   KingdomSelectModaleComponent,
   SelectDeityModaleComponent,
 } from '../modales';
+import { DeleteConfirmModaleComponent } from '../edit/delete-confirm-modale/delete-confirm-modale.component';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,8 @@ export class DecksService {
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   public get(id: string) {
@@ -65,7 +68,15 @@ export class DecksService {
     return this.http.post(`decks/${id}`, { cards, side });
   }
 
-  public delete(id: string): any {
-    return this.http.delete(`decks/${id}`);
+  public delete(id: string) {
+    return this.dialog
+      .open(DeleteConfirmModaleComponent)
+      .afterClosed()
+      .pipe(
+        switchMap((confirm?: boolean) =>
+          confirm ? this.http.delete(`decks/${id}`) : EMPTY
+        ),
+        tap(() => this.snackbar.open('Deck supprimé', 'Ok', { duration: 5000 }))
+      );
   }
 }
