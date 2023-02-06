@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'https://europe-west1-seven-platform-363908.cloudfunctions.net/api',
-  apiUrl: 'http://localhost:3333',
+  apiUrl: 'https://europe-west1-seven-platform-363908.cloudfunctions.net/api',
+  // apiUrl: 'http://localhost:3333',
 };
 
 /*

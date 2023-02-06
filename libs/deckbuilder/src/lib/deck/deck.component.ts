@@ -22,9 +22,9 @@ export class DeckComponent {
 
   public readonly cards$ = this.data$.pipe(
     map(({ deck, cardsInfo }) =>
-      deck.cards.map((id: string) =>
-        cardsInfo.find((card: any) => card.id === id)
-      )
+      deck.cards
+        .map((id: string) => cardsInfo.find((card: any) => card.id === id))
+        .filter((card: any) => !!card)
     )
   );
 

@@ -28,7 +28,6 @@ import {
   SelectDeityModaleComponent,
 } from '../modales';
 import { byType, exportFormat, getQuantity, groupCards } from '../shared';
-import { DeleteConfirmModaleComponent } from './delete-confirm-modale/delete-confirm-modale.component';
 
 @Component({
   selector: 'seven-fallen-edit',
@@ -61,9 +60,11 @@ export class EditComponent {
   public readonly deckCards$ = merge(
     this.data$.pipe(
       map((data) =>
-        data.deck.cards.map((id: string) =>
-          data.cardsInfo.find((card: any) => card.id === id)
-        )
+        data.deck.cards
+          .map((id: string) =>
+            data.cardsInfo.find((card: any) => card.id === id)
+          )
+          .filter((card: any) => !!card)
       ),
       map((cards) => () => cards)
     ),
